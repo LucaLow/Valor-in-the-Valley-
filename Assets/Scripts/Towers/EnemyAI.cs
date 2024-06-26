@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     public Transform target;
+    public float range;
     [SerializeField] private float timer = 5;
     private float bulletTime;
     public GameObject enemyBullet;
@@ -12,7 +13,11 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         transform.LookAt(target);
-        ShootAtPlayer();
+        if (Vector3.Distance(target.position, transform.position) <= range)
+        {
+            ShootAtPlayer();
+        }
+        
     }
 
     void ShootAtPlayer()

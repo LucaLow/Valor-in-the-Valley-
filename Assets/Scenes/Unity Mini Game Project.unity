@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1428222044}
+  range: 40
   timer: 4
   enemyBullet: {fileID: 2733026455005599844, guid: 84877da094a13d648a54dcd379cf5a5c,
     type: 3}
@@ -411,6 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1428222044}
+  range: 40
   timer: 6
   enemyBullet: {fileID: 2733026455005599844, guid: 84877da094a13d648a54dcd379cf5a5c,
     type: 3}
@@ -1151,6 +1153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1428222044}
+  range: 40
   timer: 5
   enemyBullet: {fileID: 2733026455005599844, guid: 84877da094a13d648a54dcd379cf5a5c,
     type: 3}
@@ -1998,6 +2001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1428222044}
+  range: 40
   timer: 5
   enemyBullet: {fileID: 2733026455005599844, guid: 84877da094a13d648a54dcd379cf5a5c,
     type: 3}
@@ -3456,6 +3460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1428222044}
+  range: 40
   timer: 7
   enemyBullet: {fileID: 2733026455005599844, guid: 84877da094a13d648a54dcd379cf5a5c,
     type: 3}
@@ -4300,6 +4305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1428222044}
+  range: 40
   timer: 6
   enemyBullet: {fileID: 2733026455005599844, guid: 84877da094a13d648a54dcd379cf5a5c,
     type: 3}
