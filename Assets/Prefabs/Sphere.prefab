@@ -127,8 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57bb4a8c84c524d44b87b6aba1c21ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: {fileID: 0}
-  damage: 0
+  damage: 10
   rb: {fileID: 2324237314707196535}
-  LaunchForce: 50
+  LaunchForce: 55
   destroyAfterSeconds: 5
