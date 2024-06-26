@@ -114,7 +114,7 @@ public class BuildManager : MonoBehaviour
             ResourceManager resourceManagerScript = _resourceManager.GetComponent<ResourceManager>();
 
             // Only proceed if a building is selected
-            if (selectedBuilding != null)
+            if (selectedBuilding != null && currentPreview != null)
             {
 
                 ResourceGenerator resourceGenerator = currentPreview.GetComponent<ResourceGenerator>();
@@ -424,8 +424,16 @@ public class BuildManager : MonoBehaviour
         return false;
     }
 
+    // TODO: The following function would ussually update the transparency of the building preview
+    // It would do this with the ToOpaqueMode and ToFadeMode functions
+    // However, these are currently disabled due to complications with setting transparency with HDRP
+    // i.e. idk how to do so, so I'll need to fix that at some point.
+
     private void SetBuildingMode(bool opaque)
     {
+
+        /*
+
         // Update preview transparency
         if (opaque)
         {
@@ -468,6 +476,8 @@ public class BuildManager : MonoBehaviour
                 }
             }
         }
+
+        */
     }
 
     private void CheckForPlacement()
