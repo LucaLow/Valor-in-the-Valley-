@@ -33,7 +33,7 @@ public class BuildManager : MonoBehaviour
     Vector3 offset = new Vector3(0, 0, 6f);
 
     // Building height
-    float buildingYPos = 0.5f;
+    float buildingYPos = 5f;
 
     // Preview lerp speed
     float lerpSpeed = 25f;
@@ -385,7 +385,7 @@ public class BuildManager : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapBox(previewCollider.transform.position, 
             colliderSize, Quaternion.identity);
 
-        foreach (BoxCollider colliderInPreviewCollider in hitColliders)
+        foreach (Collider colliderInPreviewCollider in hitColliders)
         {
             if (colliderInPreviewCollider != previewCollider)
             {
