@@ -33,7 +33,7 @@ public class BuildManager : MonoBehaviour
     Vector3 offset = new Vector3(0, 0, 6f);
 
     // Building height
-    float buildingYPos = 5f;
+    float buildingYPos = 4f;
 
     // Preview lerp speed
     float lerpSpeed = 25f;
