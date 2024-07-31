@@ -7293,6 +7293,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sawmill
       objectReference: {fileID: 0}
+    - target: {fileID: 17987413713564656, guid: f79cc0b3cf30b124e97daa62aa5c5b7f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 17987413713564668, guid: f79cc0b3cf30b124e97daa62aa5c5b7f,
         type: 3}
       propertyPath: m_RootOrder
@@ -10306,7 +10311,7 @@ MonoBehaviour:
   - {fileID: 252598510}
   blacklistedTags:
   - Building
-  - Objective
+  - Player
   _resourceManager: {fileID: 1816345134}
   _buildingsParent: {fileID: 1693655260}
   _costDisplayPanel: {fileID: 810795822}
