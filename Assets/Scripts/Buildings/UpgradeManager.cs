@@ -49,19 +49,41 @@ public class UpgradeManager : MonoBehaviour
     private int[] GetUpgradeCost(GameObject building)
     {
         ResourceGenerator resourceGenerator = building.GetComponent<ResourceGenerator>();
+        TownHallManager townHallManager = building.GetComponent<TownHallManager>();
 
-        int[] cost = resourceGenerator.cost;
-        
-        int[] newCost = {0, 0, 0};
+        int[] cost = {10, 10, 10};
 
-        // Update the cost based on the level
-
-        for (int i = 0; i < cost.Length; i++)
+        if (resourceGenerator != null)
         {
-            newCost[i] = (int)Mathf.Floor(cost[i] * Mathf.Pow(2f, resourceGenerator.level)); // Formula for building upgrade costs (cost = base cost * (2^level))
+            cost = resourceGenerator.cost;
+
+            int[] newCost = { 0, 0, 0 };
+
+            // Update the cost based on the level
+
+            for (int i = 0; i < cost.Length; i++)
+            {
+                if (resourceGenerator != null)
+                {
+                    newCost[i] = (int)Mathf.Floor(cost[i] * Mathf.Pow(2f, resourceGenerator.level)); // Formula for building upgrade costs (cost = base cost * (2^level))
+                }
+            }
+
+            return newCost;
+        }
+        else if (townHallManager != null)
+        {
+            int level = townHallManager.level;
+
+            if (level < townHallManager.maxLevel)
+            {
+                cost = new int[] { townHallManager.woodCosts[level], townHallManager.stoneCosts[level], townHallManager.foodCosts[level] };
+                return cost;
+            }
         }
 
-        return newCost;
+        return null;
+
     }
 
     // Updates the building upgrade UI
@@ -71,10 +93,26 @@ public class UpgradeManager : MonoBehaviour
         // Get the building's resource generator script
         ResourceGenerator resourceGenerator = building.GetComponent<ResourceGenerator>();
 
-        int level = resourceGenerator.level;
         string name = building.name;
+        int level = 1;
 
-        // Construct the text to be display on the UI
+        // Get the level of the building
+        if (resourceGenerator != null)
+        {
+            level = resourceGenerator.level;
+        } else
+        {
+
+            TownHallManager townHallManager = building.GetComponent<TownHallManager>();
+
+            if (townHallManager != null)
+            {
+                level = townHallManager.level;
+            }
+
+        }
+
+        // Construct the text to be displayed on the UI
         string InfoDisplayText = "Upgrade " + name + " to level: " + (level + 1).ToString() + " (F)";
 
         // Set the text
@@ -83,46 +121,54 @@ public class UpgradeManager : MonoBehaviour
         // Get the cost of upgrading
         int[] cost = GetUpgradeCost(building);
 
-        // Update the UI to display that cost
-        _woodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Wood: " + cost[0];
-        _stoneCostDisplay.GetComponent<TextMeshProUGUI>().text = "Stone: " + cost[1];
-        _foodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Food: " + cost[2];
-
-        // Update the colour of said UI
-
-        ResourceManager resourceManagerScript = _resourceManager.GetComponent<ResourceManager>();
-
-        // Check whether or not there is enough of this resource to upgrade this building
-        // If so, set the text colour to green, otherwise set it to red
-
-        // Wood
-        if (resourceManagerScript.wood >= cost[0])
+        if (cost != null)
         {
-            _woodCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCostColor;
-        }
-        else
-        {
-            _woodCostDisplay.GetComponent<TextMeshProUGUI>().color = cantAffordCostColor;
-        }
 
-        // Stone
-        if (resourceManagerScript.stone >= cost[1])
-        {
-            _stoneCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCostColor;
-        }
-        else
-        {
-            _stoneCostDisplay.GetComponent<TextMeshProUGUI>().color = cantAffordCostColor;
-        }
+            // Update the UI to display that cost
+            _woodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Wood: " + cost[0];
+            _stoneCostDisplay.GetComponent<TextMeshProUGUI>().text = "Stone: " + cost[1];
+            _foodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Food: " + cost[2];
 
-        // Food
-        if (resourceManagerScript.food >= cost[2])
+            // Update the colour of said UI
+
+            ResourceManager resourceManagerScript = _resourceManager.GetComponent<ResourceManager>();
+
+            // Check whether or not there is enough of this resource to upgrade this building
+            // If so, set the text colour to green, otherwise set it to red
+
+            // Wood
+            if (resourceManagerScript.wood >= cost[0])
+            {
+                _woodCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCostColor;
+            }
+            else
+            {
+                _woodCostDisplay.GetComponent<TextMeshProUGUI>().color = cantAffordCostColor;
+            }
+
+            // Stone
+            if (resourceManagerScript.stone >= cost[1])
+            {
+                _stoneCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCostColor;
+            }
+            else
+            {
+                _stoneCostDisplay.GetComponent<TextMeshProUGUI>().color = cantAffordCostColor;
+            }
+
+            // Food
+            if (resourceManagerScript.food >= cost[2])
+            {
+                _foodCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCostColor;
+            }
+            else
+            {
+                _foodCostDisplay.GetComponent<TextMeshProUGUI>().color = cantAffordCostColor;
+            }
+
+        } else
         {
-            _foodCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCostColor;
-        }
-        else
-        {
-            _foodCostDisplay.GetComponent<TextMeshProUGUI>().color = cantAffordCostColor;
+            UpgradePanelUI.SetActive(false);
         }
         
     }
@@ -131,11 +177,19 @@ public class UpgradeManager : MonoBehaviour
     {
 
         ResourceGenerator resourceGenerator = building.GetComponent<ResourceGenerator>();
+        TownHallManager townHallManager = building.GetComponent<TownHallManager>();
 
         int[] cost = GetUpgradeCost(building);
 
         // If so, upgrade the building
-        resourceGenerator.level += 1;
+        if (resourceGenerator!= null)
+        {
+            resourceGenerator.level += 1;
+        } else if (townHallManager != null)
+        {
+            townHallManager.level += 1;
+            townHallManager.UpdateBuildingLimit();
+        }
 
         // Subtract the cost from the player's resources
 
@@ -163,15 +217,20 @@ public class UpgradeManager : MonoBehaviour
 
             ResourceManager resourceManager = _resourceManager.GetComponent<ResourceManager>();
 
-            // Check whether each resource cost can be afforded
-            if (resourceManager.wood >= cost[0] && resourceManager.stone >= cost[1] && resourceManager.food >= cost[2])
+            if (cost != null)
             {
-
-                // Use the progress radial
-                if (progressRadialManager.occupant == null)
+                
+                // Check whether each resource cost can be afforded
+                if (resourceManager.wood >= cost[0] && resourceManager.stone >= cost[1] && resourceManager.food >= cost[2])
                 {
-                    progressRadialManager.occupant = gameObject;
-                    buildingUpgrading = building;
+
+                    // Use the progress radial
+                    if (progressRadialManager.occupant == null)
+                    {
+                        progressRadialManager.occupant = gameObject;
+                        buildingUpgrading = building;
+                    }
+
                 }
 
             }
