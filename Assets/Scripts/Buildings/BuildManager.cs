@@ -30,7 +30,7 @@ public class BuildManager : MonoBehaviour
     // Parameters
 
     // Preview offset
-    Vector3 offset = new Vector3(0, 0, 10f);
+    Vector3 offset = new Vector3(0, 0, 8f);
 
     // Building height
     float buildingYPos = 4f;
