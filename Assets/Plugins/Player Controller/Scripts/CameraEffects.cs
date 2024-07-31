@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraEffects : MonoBehaviour
@@ -35,6 +33,9 @@ public class CameraEffects : MonoBehaviour
 
     private void Update()
     {
+        if (PlayerController.active == false)
+            return;
+
         tilt = 0;
 
         if (headBobSettings.enabled)
