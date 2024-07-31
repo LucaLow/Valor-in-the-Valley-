@@ -30,7 +30,7 @@ public class BuildManager : MonoBehaviour
     // Parameters
 
     // Preview offset
-    Vector3 offset = new Vector3(0, 0, 6f);
+    Vector3 offset = new Vector3(0, 0, 10f);
 
     // Building height
     float buildingYPos = 4f;
@@ -293,9 +293,7 @@ public class BuildManager : MonoBehaviour
                         UpdatePreviewCollision(false);
 
                         // Set position to be in front of the player
-                        currentPreview.transform.position = _camera.position + _camera.forward * offset.z;
-                        currentPreview.transform.position = new Vector3(currentPreview.transform.position.x,
-                            buildingYPos, currentPreview.transform.position.z);
+                        UpdatePreviewPosition(false);
 
                         previewColor = currentPreview.GetComponent<MeshRenderer>().material.color;
                         previewColor.a = previewOpacity;
@@ -334,18 +332,32 @@ public class BuildManager : MonoBehaviour
             }
     }
 
+    float gridSize = 5f;
+
     // Update prefab position function
     // Updates the prefab to be in front of the camera
-    private void UpdatePreviewPosition()
+    private void UpdatePreviewPosition(bool shouldLerp)
     {
         if (currentPreview != null)
         {
             // Set the target position
             Vector3 targetPosition = _camera.position + _camera.forward * offset.z;
-            targetPosition.y = buildingYPos;
+
+            // Round the target position
+            targetPosition = new Vector3(
+                Mathf.Round(targetPosition.x / gridSize) * gridSize,
+                buildingYPos,
+                Mathf.Round(targetPosition.z / gridSize) * gridSize
+                );
 
             // Lerp the transform of the preview to the target position
-            currentPreview.transform.position = Vector3.Lerp(currentPreview.transform.position, targetPosition, Time.deltaTime * lerpSpeed);
+            if (shouldLerp)
+            {
+                currentPreview.transform.position = Vector3.Lerp(currentPreview.transform.position, targetPosition, Time.deltaTime * lerpSpeed);
+            } else
+            {
+                currentPreview.transform.position = targetPosition;
+            }
         }
     }
 
@@ -548,6 +560,11 @@ public class BuildManager : MonoBehaviour
 
             ResourceManager resourceManagerScript = _resourceManager.GetComponent<ResourceManager>();
 
+            Vector3 originalPosition = currentPreview.transform.position;
+
+            // Set the preview position to be precisely on grid
+            UpdatePreviewPosition(false);
+
             // Only place the building IF;
             // Left mouse button is down, no objects are within the preview's collider, and resources are sufficient
 
@@ -560,6 +577,10 @@ public class BuildManager : MonoBehaviour
                 // Update material render mode to opaque
                 //ToOpaqueMode(currentPreview.GetComponent<MeshRenderer>().material);
                 SetBuildingMode(true);
+
+                // Update the colour
+                UnityEngine.Color currentColour = new UnityEngine.Color(previewColor.r, previewColor.g, previewColor.b, previewOpacity);
+                UpdateBuildingColour(currentColour, true);
 
                 // Remove the relevant resources
                 resourceManagerScript.wood -= woodRequired;
@@ -606,6 +627,14 @@ public class BuildManager : MonoBehaviour
                 SFX.Play();
 
             }
+            else
+            {
+                // Revert the exact grid placement of the preview
+                currentPreview.transform.position = originalPosition;
+
+                // Update current building preview position
+                UpdatePreviewPosition(true);
+            }
         }
     }
 
@@ -633,15 +662,16 @@ public class BuildManager : MonoBehaviour
         }
 
     }
-
+    
     float timePassed = 0f;
-
+    /*
     float transparencyOscillationPeriod = 0.5f;
     float transparencyOscillationAmplitude = 0.2f;
     float transparencyOffset = 0.5f;
-
+    */
     float alertCooldown = 0.25f;
     float timeSinceLastAlert = 100f;
+
 
     // Update is called once per frame
     void Update()
@@ -653,16 +683,14 @@ public class BuildManager : MonoBehaviour
         // Update the currently selected building type
         UpdateSelectedBuilding();
 
-        // Update current building preview position
-        UpdatePreviewPosition();
-
         UpdatePreviewColor();
 
         CheckForPlacement();
 
+        // DISABLED until I can figure out how to get dynamic transparency working again :/
         // Update the preview opacity using a sine wave
         // Makes it look a little nicer and lively
-        previewOpacity = Mathf.Sin(timePassed / transparencyOscillationPeriod) * transparencyOscillationAmplitude + transparencyOffset;
+        //previewOpacity = Mathf.Sin(timePassed / transparencyOscillationPeriod) * transparencyOscillationAmplitude + transparencyOffset;
 
         UpdateCostDisplay();
 
