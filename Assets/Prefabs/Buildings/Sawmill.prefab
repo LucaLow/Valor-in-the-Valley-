@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 17987413713564658}
   - component: {fileID: 17987413713564659}
   - component: {fileID: 3181558929674098012}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sawmill
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 1535918394339427567}
   - component: {fileID: 8624898233702715192}
   - component: {fileID: 2527426927229264279}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 6976945479429870241}
   - component: {fileID: 1425053152901655473}
   - component: {fileID: 3232479924311451197}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2150621365750134751}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fences (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 6520959310100924173}
   - component: {fileID: 8535613133284095954}
   - component: {fileID: 8042460280747590162}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Progress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9208279255413793028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fences
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,6 +536,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fence_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -647,6 +652,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree_04 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6695003846789727565, guid: bae468b3a6b9ea141967f3cfbe601352,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bae468b3a6b9ea141967f3cfbe601352, type: 3}
 --- !u!4 &6422156704696829758 stripped
@@ -756,6 +766,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fence_01 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -867,6 +882,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -976,6 +996,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fence_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1087,6 +1112,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1196,6 +1226,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tree_04 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695003846789727565, guid: bae468b3a6b9ea141967f3cfbe601352,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bae468b3a6b9ea141967f3cfbe601352, type: 3}
@@ -1307,6 +1342,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence_01
       objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1416,6 +1456,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fence_01 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1527,6 +1572,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence_01 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1636,6 +1686,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fence_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1747,6 +1802,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence_01
       objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1856,6 +1916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fence_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
@@ -1967,6 +2032,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree_04
       objectReference: {fileID: 0}
+    - target: {fileID: 6695003846789727565, guid: bae468b3a6b9ea141967f3cfbe601352,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bae468b3a6b9ea141967f3cfbe601352, type: 3}
 --- !u!4 &4038247835651666568 stripped
@@ -2076,6 +2146,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fence_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008297296414033687, guid: cb422acdc199d6e42910f589b81c283b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6847449883323985709, guid: cb422acdc199d6e42910f589b81c283b, type: 3}

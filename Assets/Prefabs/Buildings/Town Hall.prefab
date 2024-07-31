@@ -3902,7 +3902,7 @@ GameObject:
   - component: {fileID: 3721430196445137318}
   - component: {fileID: 5354850369261256226}
   - component: {fileID: 3721430196445137319}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Town Hall
   m_TagString: Building
   m_Icon: {fileID: 0}
