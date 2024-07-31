@@ -334,6 +334,11 @@ public class BuildManager : MonoBehaviour
 
     float gridSize = 5f;
 
+    float xGridMax = 170f;
+    float xGridMin = 105f;
+    float zGridMax = 170f;
+    float zGridMin = 105f;
+
     // Update prefab position function
     // Updates the prefab to be in front of the camera
     private void UpdatePreviewPosition(bool shouldLerp)
@@ -349,6 +354,26 @@ public class BuildManager : MonoBehaviour
                 buildingYPos,
                 Mathf.Round(targetPosition.z / gridSize) * gridSize
                 );
+
+            // Clamp the x and z positions of the building
+
+            if (targetPosition.x > xGridMax)
+            {
+                targetPosition.x = xGridMax;
+            }
+            else if (targetPosition.x < xGridMin)
+            {
+                targetPosition.x = xGridMin;
+            }
+
+            if (targetPosition.z > zGridMax)
+            {
+                targetPosition.z = zGridMax;
+            }
+            else if (targetPosition.z < zGridMin)
+            {
+                targetPosition.z = zGridMin;
+            }
 
             // Lerp the transform of the preview to the target position
             if (shouldLerp)
