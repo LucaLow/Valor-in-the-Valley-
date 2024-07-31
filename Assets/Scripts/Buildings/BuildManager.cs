@@ -289,6 +289,9 @@ public class BuildManager : MonoBehaviour
 
                         currentPreview.transform.parent = _buildingsParent;
 
+                        // Update preview collisionUpdatePreviewCollision(false);
+                        UpdatePreviewCollision(false);
+
                         // Set position to be in front of the player
                         currentPreview.transform.position = _camera.position + _camera.forward * offset.z;
                         currentPreview.transform.position = new Vector3(currentPreview.transform.position.x,
@@ -343,6 +346,58 @@ public class BuildManager : MonoBehaviour
 
             // Lerp the transform of the preview to the target position
             currentPreview.transform.position = Vector3.Lerp(currentPreview.transform.position, targetPosition, Time.deltaTime * lerpSpeed);
+        }
+    }
+
+    // Update preview collision function
+    // Sets the collision of each of the building's children to the desired value\
+    // E.G. If the value is false, collision is disabled
+
+    private void UpdatePreviewCollision(bool collisionsEnabled)
+    {
+
+        foreach (Transform child in currentPreview.GetComponentInChildren<Transform>())
+        {
+
+            // Check for box colliders
+            BoxCollider childBoxCollider = child.GetComponent<BoxCollider>();
+
+            if (childBoxCollider != null)
+            {
+                childBoxCollider.enabled = collisionsEnabled;
+            }
+
+            // Check for mesh colliders
+            MeshCollider childMeshCollider = child.GetComponent<MeshCollider>();
+
+            if (childMeshCollider != null)
+            {
+                childMeshCollider.enabled = collisionsEnabled;
+            }
+
+            // Repeat for all children of children
+
+            foreach (Transform child2 in child.GetComponentInChildren<Transform>())
+            {
+
+                // Check for box colliders
+                BoxCollider child2BoxCollider = child2.GetComponent<BoxCollider>();
+
+                if (child2BoxCollider != null)
+                {
+                    child2BoxCollider.enabled = collisionsEnabled;
+                }
+
+                // Check for mesh colliders
+                MeshCollider child2MeshCollider = child2.GetComponent<MeshCollider>();
+
+                if (child2MeshCollider != null)
+                {
+                    child2MeshCollider.enabled = collisionsEnabled;
+                }
+
+            }
+
         }
     }
 
@@ -522,6 +577,9 @@ public class BuildManager : MonoBehaviour
 
                 // Update the building's tag
                 currentPreview.tag = "Building";
+
+                // Enable the building's collisions
+                UpdatePreviewCollision(true);
 
                 // Clear references to the preview
                 currentPreview = null;
