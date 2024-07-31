@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 6801695734171757814}
   - component: {fileID: 376223411937900565}
   - component: {fileID: 7666636554359823744}
+  - component: {fileID: -6950222440196319049}
   m_Layer: 6
   m_Name: Farm
   m_TagString: Untagged
@@ -312,6 +313,22 @@ MonoBehaviour:
   generationInterval: 15
   level: 1
   cost: 640000004b0000000a000000
+--- !u!208 &-6950222440196319049
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6801695734173954614}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.335, z: 2}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.105000004, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7262442318080926613
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,6 +41,7 @@ public class AIAgent : MonoBehaviour
 
     private void Start()
     {
+        wanderingState.wanderRangePosition = transform.position;
         agent = GetComponent<NavMeshAgent>();
     }
 

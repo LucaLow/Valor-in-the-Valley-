@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 8736104707347245280}
   - component: {fileID: 8736104707347245281}
   - component: {fileID: 8062267828086017332}
+  - component: {fileID: -8514759881933461090}
   m_Layer: 6
   m_Name: Mine
   m_TagString: Building
@@ -379,6 +380,22 @@ MonoBehaviour:
   generationInterval: 3
   level: 1
   cost: 0f0000000500000000000000
+--- !u!208 &-8514759881933461090
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736104707347245282}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 4.85, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &2876279100678129861
 PrefabInstance:
   m_ObjectHideFlags: 0
