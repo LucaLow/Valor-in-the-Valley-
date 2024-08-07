@@ -136,7 +136,7 @@ public class CameraEffects : MonoBehaviour
 
     private void PerformHorizontalTilt()
     {
-        float horizontalMovement = -playerMovement.GetMovementInput().x;
+        float horizontalMovement = -PlayerMovement.GetMovementInput().x;
         float targetTilt = horizontalMovement * horizontalTiltDueToVelocitySettings.rotationIntensity;
 
         moveTilt = Mathf.LerpAngle(moveTilt, targetTilt, horizontalTiltDueToVelocitySettings.rotationInterpolationSpeed * Time.deltaTime);
@@ -171,10 +171,10 @@ public class CameraEffects : MonoBehaviour
         }
         else
         {
-            if (playerMovement.GetMovementInput().y > 0)
+            if (PlayerMovement.GetMovementInput().y > 0)
                 // Moving forwards
                 playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.movingForwardFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.deltaTime);
-            else if (playerMovement.GetMovementInput().y < 0)
+            else if (PlayerMovement.GetMovementInput().y < 0)
                 // Moving backwards
                 playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.movingBackwardFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.deltaTime);
             else

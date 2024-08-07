@@ -12,11 +12,18 @@ public class FriendlyAIDirector : MonoBehaviour
     public Transform pathSprite;
     public Transform arrowHeadSprite;
     public Transform destinationIndicator;
+    public const float graphicOffset = 0f;
+
     [Space]
 
+    public float cameraControllerSpeed = 20f;
+    public float cameraZoomSpeed = 10f;
+    public Vector2 zoomClamp = new Vector2(50f, 200f);
     public float targetHeight = 40f;
     public float radius = 10;
     public LayerMask friendlyAgentsLayer;
+    public LayerMask friendlyAgentsBoundaryLayer;
+    private float currentHeight;
 
     private bool isDrawingPath;
     private Vector3 pathOrigin;
@@ -29,6 +36,7 @@ public class FriendlyAIDirector : MonoBehaviour
     private Coroutine stopDirectingAnimation;
 
     private Camera playerCamera;
+    private Vector3 mousePosition;
 
     private void Start()
     {
@@ -48,7 +56,6 @@ public class FriendlyAIDirector : MonoBehaviour
                 beforeRotation = playerCamera.transform.eulerAngles;
 
 
-                isDirecting = true;
                 startDirectingAnimation = StartCoroutine(StartDirecting());
             }
             else
@@ -63,10 +70,13 @@ public class FriendlyAIDirector : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && isDirecting)
         {
+            // Start drawing paths
+
             RaycastHit hit;
-            Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition), out hit);
+            Physics.SphereCast(playerCamera.ScreenPointToRay(Input.mousePosition - new Vector3(radius * 1f, 0, radius * 1f)), radius * 2, out hit);
+
             pathOrigin = hit.point;
-            pathOrigin.y += 1f;
+            pathOrigin.y += graphicOffset;
 
             // Reset positions and scales
             arrowHeadSprite.position = pathOrigin;
@@ -88,14 +98,35 @@ public class FriendlyAIDirector : MonoBehaviour
 
         if (isDirecting)
         {
+            // Show the destination indicator
             destinationIndicator.gameObject.SetActive(true);
 
-            RaycastHit hit;
-            Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition), out hit);
-            Vector3 mousePosition = hit.point;
-            mousePosition.y += 0.5f;
+            // Hide the cursor
+            Cursor.visible = false;
 
+            // Get the cursor world position
+            RaycastHit hit;
+            Physics.SphereCast(playerCamera.ScreenPointToRay(Input.mousePosition - new Vector3(radius * 1f, 0, radius * 1f)), radius * 2, out hit);
+
+            if (hit.transform != null && (friendlyAgentsBoundaryLayer & (1 << hit.transform.gameObject.layer)) != 0)
+            {
+                mousePosition = hit.point;
+                mousePosition.y += graphicOffset - 0.5f;
+            }
+
+            // Make the destination indicator follow the cursor
             destinationIndicator.position = Vector3.Lerp(destinationIndicator.position, mousePosition, 30 * Time.deltaTime);
+
+            currentHeight -= Input.mouseScrollDelta.y * cameraZoomSpeed;
+            currentHeight = Mathf.Clamp(currentHeight, zoomClamp.x, zoomClamp.y);
+            Vector3 currentPosition = playerCamera.transform.position;
+            currentPosition.y = Mathf.Lerp(currentPosition.y, currentHeight, 10 * Time.deltaTime);
+            playerCamera.transform.position = currentPosition;
+
+            // WASD Camera director movement
+            Vector2 input = PlayerMovement.GetMovementInput();
+            Vector2 movement = input * cameraControllerSpeed * (currentHeight * 0.01f);
+            playerCamera.transform.Translate(movement * Time.deltaTime);
         }
         else
         {
@@ -109,9 +140,13 @@ public class FriendlyAIDirector : MonoBehaviour
 
             // Raycast from cursor
             RaycastHit hit;
-            Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition), out hit);
-            Vector3 mousePosition = hit.point;
-            mousePosition.y += 1f;
+            Physics.SphereCast(playerCamera.ScreenPointToRay(Input.mousePosition - new Vector3(radius * 1f, 0, radius * 1f)), radius * 2, out hit);
+
+            if (hit.transform != null && (friendlyAgentsBoundaryLayer & (1 << hit.transform.gameObject.layer)) != 0)
+            {
+                mousePosition = hit.point;
+                mousePosition.y += graphicOffset;
+            }
 
             // Change in mouse position
             Vector3 delta = pathOrigin - mousePosition;
@@ -178,17 +213,21 @@ public class FriendlyAIDirector : MonoBehaviour
 
         // Disable player & camera movement
         PlayerController.active = false;
-        // Show the cursor
+        // Activate the cursor
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
 
+
+        // Reset the current height
+        currentHeight = targetHeight;
         // Calculate the target position
         Vector3 targetPosition = playerCamera.transform.localPosition;
-        targetPosition.y = targetHeight;
+        targetPosition.y = currentHeight;
         // Calculate the target rotation
         Vector3 targetRotation = new Vector3(90f, 0f, 0f);
 
         // 1 second transition time
-        while (time <= 1f)
+        while (time <= 0.75f)
         {
             // Translate the camera to the target position
             playerCamera.transform.localPosition = Vector3.Lerp(playerCamera.transform.localPosition, targetPosition, 10 * Time.deltaTime);
@@ -205,6 +244,21 @@ public class FriendlyAIDirector : MonoBehaviour
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
+        // Get the cursor world position
+        RaycastHit hit;
+        Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, friendlyAgentsBoundaryLayer);
+        if (hit.transform != null)
+        {
+            mousePosition = hit.point;
+            mousePosition.y += graphicOffset - 0.5f;
+        }
+        // Make the destination indicator follow the cursor
+        destinationIndicator.position = mousePosition;
+
+
+        // Begin directing
+        isDirecting = true;
 
         // Snap the camera to the final target position & rotation
         playerCamera.transform.localPosition = targetPosition;

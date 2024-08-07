@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move((transform.forward * vertical + transform.right * horizontal).normalized * speed * Time.deltaTime);
     }
 
-    public Vector2 GetMovementInput()
+    public static Vector2 GetMovementInput()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
