@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class FriendlyAIDirector : MonoBehaviour
 {
+    public static bool isDirecting = false;
+
+
     public KeyCode toggle = KeyCode.E;
 
     [Space]
@@ -12,6 +15,7 @@ public class FriendlyAIDirector : MonoBehaviour
     public Transform pathSprite;
     public Transform arrowHeadSprite;
     public Transform destinationIndicator;
+    public GameObject[] objectsToToggleWhileDirecting;
     public const float graphicOffset = 0f;
 
     [Space]
@@ -21,6 +25,9 @@ public class FriendlyAIDirector : MonoBehaviour
     public Vector2 zoomClamp = new Vector2(50f, 200f);
     public float targetHeight = 40f;
     public float radius = 10;
+
+    [Space]
+
     public LayerMask friendlyAgentsLayer;
     public LayerMask friendlyAgentsBoundaryLayer;
     private float currentHeight;
@@ -28,7 +35,6 @@ public class FriendlyAIDirector : MonoBehaviour
     private bool isDrawingPath;
     private Vector3 pathOrigin;
 
-    private bool isDirecting = false;
     private Vector3 beforePosition;
     private Vector3 beforeRotation;
 
@@ -120,7 +126,7 @@ public class FriendlyAIDirector : MonoBehaviour
             currentHeight -= Input.mouseScrollDelta.y * cameraZoomSpeed;
             currentHeight = Mathf.Clamp(currentHeight, zoomClamp.x, zoomClamp.y);
             Vector3 currentPosition = playerCamera.transform.position;
-            currentPosition.y = Mathf.Lerp(currentPosition.y, currentHeight, 10 * Time.deltaTime);
+            currentPosition.y = Mathf.Lerp(currentPosition.y, currentHeight, 20 * Time.deltaTime);
             playerCamera.transform.position = currentPosition;
 
             // WASD Camera director movement
@@ -194,7 +200,7 @@ public class FriendlyAIDirector : MonoBehaviour
             {
                 // Raycast from cursor
                 RaycastHit hit;
-                Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition), out hit);
+                Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, ~friendlyAgentsBoundaryLayer);
                 Vector3 mousePosition = hit.point;
                 mousePosition.y += 0.5f;
 
@@ -214,7 +220,7 @@ public class FriendlyAIDirector : MonoBehaviour
         // Disable player & camera movement
         PlayerController.active = false;
         // Activate the cursor
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
 
@@ -225,6 +231,12 @@ public class FriendlyAIDirector : MonoBehaviour
         targetPosition.y = currentHeight;
         // Calculate the target rotation
         Vector3 targetRotation = new Vector3(90f, 0f, 0f);
+
+        // Disable toggled gameobjects
+        foreach (GameObject gameObject in objectsToToggleWhileDirecting)
+        {
+            gameObject.SetActive(false);
+        }
 
         // 1 second transition time
         while (time <= 0.75f)
@@ -287,6 +299,12 @@ public class FriendlyAIDirector : MonoBehaviour
             // Increment time variable
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
+        }
+
+        // Enable toggled gameobjects
+        foreach (GameObject gameObject in objectsToToggleWhileDirecting)
+        {
+            gameObject.SetActive(true);
         }
 
         // Snap the camera to the final target position & rotation

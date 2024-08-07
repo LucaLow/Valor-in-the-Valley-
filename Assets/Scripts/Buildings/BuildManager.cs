@@ -229,6 +229,8 @@ public class BuildManager : MonoBehaviour
     // If any keys related to any buildings are pressed, update the selected building variable
     private void UpdateSelectedBuilding()
     {
+        if (FriendlyAIDirector.isDirecting)
+            return;
 
         int i = 0;
 
