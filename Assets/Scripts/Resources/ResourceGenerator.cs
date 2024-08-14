@@ -12,7 +12,7 @@ public class ResourceGenerator : MonoBehaviour
 {
 
     public GameObject _resourceManager;
-    public Transform _camera;
+    public Transform _camera { get; set; }
 
     [Space]
 
@@ -116,6 +116,8 @@ public class ResourceGenerator : MonoBehaviour
 
     private void Start()
     {
+        _camera = Camera.main.transform;
+
         generationProgressBar.SetActive(true);
 
         // Get the colour of the generated display
