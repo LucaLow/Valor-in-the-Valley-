@@ -11535,7 +11535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11383563dda25f94cb5db42d6d7a6ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
+  _camera: {fileID: 2026072934}
   buildingPrefabs:
   - {fileID: 17987413713564656, guid: f79cc0b3cf30b124e97daa62aa5c5b7f, type: 3}
   - {fileID: 8736104707347245282, guid: 24d432d831378154b9ee324d810d9a85, type: 3}

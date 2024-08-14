@@ -703,6 +703,7 @@ public class BuildManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(currentPreview);
 
         timePassed += Time.deltaTime;
         timeSinceLastAlert += Time.deltaTime;

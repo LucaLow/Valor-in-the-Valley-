@@ -6880,7 +6880,7 @@ PrefabInstance:
     - target: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76,
         type: 3}
       propertyPath: m_Name
-      value: Sword_01
+      value: Sword
       objectReference: {fileID: 0}
     - target: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76,
         type: 3}
@@ -11038,6 +11038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2050433755}
+  - component: {fileID: 2050433756}
   - component: {fileID: 2050433754}
   m_Layer: 3
   m_Name: Weapon Parent
@@ -11076,6 +11077,20 @@ Transform:
   m_Father: {fileID: 2026072934}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2050433756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050433753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d615a8cf7bafdc4381c3c9e27d80716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1843139553}
+  animation1: 
 --- !u!1 &2057353564
 GameObject:
   m_ObjectHideFlags: 0
@@ -11535,7 +11550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11383563dda25f94cb5db42d6d7a6ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
+  _camera: {fileID: 2026072934}
   buildingPrefabs:
   - {fileID: 17987413713564656, guid: f79cc0b3cf30b124e97daa62aa5c5b7f, type: 3}
   - {fileID: 8736104707347245282, guid: 24d432d831378154b9ee324d810d9a85, type: 3}
