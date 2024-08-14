@@ -72,7 +72,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     speed = movement.sprintSpeed;
                 }
-                
             }
         }
 
