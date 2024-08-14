@@ -11,8 +11,8 @@ public class BuildManager : MonoBehaviour
 
     public Transform _camera;
 
-    string selectedBuilding = null;
-    GameObject currentPreview = null;
+    public static string selectedBuilding = null;
+    public static GameObject currentPreview = null;
 
     // Building Prefabs Array
     public GameObject[] buildingPrefabs;
@@ -703,8 +703,6 @@ public class BuildManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(currentPreview);
-
         timePassed += Time.deltaTime;
         timeSinceLastAlert += Time.deltaTime;
 

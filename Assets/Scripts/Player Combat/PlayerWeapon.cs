@@ -10,8 +10,13 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
+            if (BuildManager.currentPreview == null)
+            {
+                animator.Play(animation1);
+
+            }
         }
     }
 }
