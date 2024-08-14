@@ -382,6 +382,9 @@ public class AIAgent : MonoBehaviour
             "Enemy"
         };
 
+        // Add a health component
+        AgentHealth health = agentObject.AddComponent<AgentHealth>();
+
         // Create temporary capsule graphics
         GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
         capsule.transform.SetParent(agentObject.transform);

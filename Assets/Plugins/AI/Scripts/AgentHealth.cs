@@ -7,6 +7,12 @@ public class AgentHealth : MonoBehaviour
     public float maxHealth = 100f;
     public float health = 100f;
 
+    private void Update()
+    {
+        if (IsDead())
+            Destroy(gameObject);
+    }
+
     public void TakeDamage(float amount)
     {
         health -= Mathf.Abs(amount);

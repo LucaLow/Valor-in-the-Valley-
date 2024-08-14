@@ -23,50 +23,47 @@ public class PlayerWeapon : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) // Left click to attack
         {
-            if (playerController.playerMovementScript.speed != playerController.playerMovementScript.movement.sprintSpeed) // Not sprinting
-            {
                 if (BuildManager.currentPreview == null) // Not building
                 {
-                    if (currentHash == idleHash && isPlayingAnimation == false)
+                if (currentHash == idleHash && isPlayingAnimation == false)
+                {
+                    // Animation is not playing so start a swing animation
+
+                    // Select a random animation to play
+                    int firstSwingIndex = Random.Range(0, fromRightAnimations.Length);
+                    string firstSwing = fromRightAnimations[firstSwingIndex];
+
+                    // Play the random animation
+                    animator.SetTrigger(firstSwing);
+
+                    // Adjust the direction for any consecutively played animations
+                    nextDirection = "left";
+                }
+                else
+                {
+                    if (isPlayingAnimation && string.IsNullOrEmpty(queuedAnimation))
                     {
-                        // Animation is not playing so start a swing animation
-
-                        // Select a random animation to play
-                        int firstSwingIndex = Random.Range(0, fromRightAnimations.Length);
-                        string firstSwing = fromRightAnimations[firstSwingIndex];
-
-                        // Play the random animation
-                        animator.SetTrigger(firstSwing);
-
-                        // Adjust the direction for any consecutively played animations
-                        nextDirection = "left";
-                    }
-                    else
-                    {
-                        if (isPlayingAnimation && string.IsNullOrEmpty(queuedAnimation))
+                        if (nextDirection == "left")
                         {
-                            if (nextDirection == "left")
-                            {
-                                // Select a random animation to play
-                                int swingIndex = Random.Range(0, fromLeftAnimations.Length);
-                                string swing = fromLeftAnimations[swingIndex];
+                            // Select a random animation to play
+                            int swingIndex = Random.Range(0, fromLeftAnimations.Length);
+                            string swing = fromLeftAnimations[swingIndex];
 
-                                // Queue the swing animation
-                                queuedAnimation = swing;
-                            }
-                            else if (nextDirection == "right")
-                            {
-                                // Select a random animation to play
-                                int swingIndex = Random.Range(0, fromRightAnimations.Length);
-                                string swing = fromRightAnimations[swingIndex];
-
-                                // Queue the swing animation
-                                queuedAnimation = swing;
-                            }
-
-                            // Alternate swing direction
-                            nextDirection = nextDirection == "left" ? "right" : "left";
+                            // Queue the swing animation
+                            queuedAnimation = swing;
                         }
+                        else if (nextDirection == "right")
+                        {
+                            // Select a random animation to play
+                            int swingIndex = Random.Range(0, fromRightAnimations.Length);
+                            string swing = fromRightAnimations[swingIndex];
+
+                            // Queue the swing animation
+                            queuedAnimation = swing;
+                        }
+
+                        // Alternate swing direction
+                        nextDirection = nextDirection == "left" ? "right" : "left";
                     }
                 }
             }
@@ -94,8 +91,8 @@ public class PlayerWeapon : MonoBehaviour
 
     public void ShakeCamera()
     {
-        float intensity = .25f;
-        float speed = 5f;
+        float intensity = 0.5f;
+        float speed = 8f;
         float length = 0.15f;
 
         cameraEffects.ShakeCamera(intensity, speed, length);

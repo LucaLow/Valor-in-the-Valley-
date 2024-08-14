@@ -95,11 +95,13 @@ public class CameraEffects : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                while (Mathf.Abs(defaultPosition.x - transform.localPosition.x) > 0.5f)
+                // Reset the camera position to the default
+                while (Mathf.Abs(defaultPosition.x - transform.localPosition.x) > 0.001f)
                 {
                     transform.localPosition = Vector3.Lerp(transform.localPosition, defaultPosition, 10 * Time.deltaTime);
                     yield return new WaitForEndOfFrame();
                 }
+                transform.localPosition = defaultPosition;
                 break;
             }
         }
