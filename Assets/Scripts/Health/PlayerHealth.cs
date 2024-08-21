@@ -2,29 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : Health
 {
-    public Health hp;
-    public int health;
-    public int maxHealth = 100;
-    void Start()
-    {
-        health = maxHealth;
-    }
+    public Slider healthBarSlider;
+    public Gradient healthBarColors;
 
     private void Update()
     {
-        hp.SetHealth(health);
-    }
+        float healthPercentage = HealthPercentage();
+        healthBarSlider.value = Mathf.Lerp(healthBarSlider.value, healthPercentage, 10 * Time.deltaTime);
+        healthBarSlider.targetGraphic.color = Color.Lerp(healthBarSlider.targetGraphic.color, healthBarColors.Evaluate(healthPercentage), 10 * Time.deltaTime);
 
-    public void TakeDamage(int amount)
-    {
-        health -= amount;
-        if(health <= 0)
+
+        if (IsDead())
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("Main Menu");
         }
-            
     }
 }

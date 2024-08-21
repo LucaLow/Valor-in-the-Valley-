@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -274,16 +273,28 @@ public class AIAgent : MonoBehaviour
 
 
     /// <summary>
-    /// Rotates the agent to face in the direction of the path
+    /// Rotates the agent to face in the direction of the path or target
     /// </summary>
     public void UpdateRotation()
     {
+        Vector3 targetPosition = agent.steeringTarget;
+        if (brainState == BrainState.attacking)
+        {
+            if (agentType == AgentType.Melee)
+                targetPosition = meleeAttackingState.target.position;
+            else
+                targetPosition = rangeAttackingState.target.position;
+        }
+
         // The difference in position between the agent and the next point in its path
-        Vector3 deltaPosition = agent.steeringTarget - transform.position;
+        Vector3 deltaPosition = targetPosition - transform.position;
+
+        
+
         if (deltaPosition != Vector3.zero)
         {
             // Calculate the rotation
-            Quaternion toRotation = Quaternion.LookRotation(agent.steeringTarget - transform.position);
+            Quaternion toRotation = Quaternion.LookRotation(deltaPosition);
             // Interpolate and apply the rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 6 * Time.deltaTime);
         }
