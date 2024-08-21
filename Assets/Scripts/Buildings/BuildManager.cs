@@ -93,6 +93,7 @@ public class BuildManager : MonoBehaviour
         buildingKeycodes.Add("Sawmill", KeyCode.Alpha1);
         buildingKeycodes.Add("Mine", KeyCode.Alpha2);
         buildingKeycodes.Add("Farm", KeyCode.Alpha3);
+        buildingKeycodes.Add("Barracks", KeyCode.Alpha4);
 
         // Reference to which building prefab relates to what index in the public prefab array
         // e.g. if the sawmill is the first item in the prefab array,
@@ -101,6 +102,7 @@ public class BuildManager : MonoBehaviour
         buildingPrefabDict.Add("Sawmill", buildingPrefabs[0]);
         buildingPrefabDict.Add("Mine", buildingPrefabs[1]);
         buildingPrefabDict.Add("Farm", buildingPrefabs[2]);
+        buildingPrefabDict.Add("Barracks", buildingPrefabs[3]);
 
     }
 
@@ -122,14 +124,28 @@ public class BuildManager : MonoBehaviour
                 // Show the cost display panel
                 _costDisplayPanel.SetActive(true);
 
+                int[] cost = {-1, -1, -1};
+
+                if (resourceGenerator != null)
+                {
+                    cost = resourceGenerator.cost;
+                } else
+                {
+                    BarracksManager barracksManager = currentPreview.GetComponent<BarracksManager>();
+                    if (barracksManager != null)
+                    {
+                        cost = barracksManager.cost;
+                    }
+                }
+
                 if (_woodCostDisplay != null)
                 {
                     // Update the text display for wood
-                    _woodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Wood: " + resourceGenerator.cost[0].ToString();
+                    _woodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Wood: " + cost[0].ToString();
 
                     // Check whether or not there is enough of this resource to build this building
                     // If so, set the text colour to green, otherwise set it to red
-                    if (resourceManagerScript.wood >= resourceGenerator.cost[0])
+                    if (resourceManagerScript.wood >= cost[0])
                     {
                         _woodCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCDPColor;
                     } else
@@ -141,11 +157,11 @@ public class BuildManager : MonoBehaviour
                 if (_stoneCostDisplay != null)
                 {
                     // Update the text display for stone
-                    _stoneCostDisplay.GetComponent<TextMeshProUGUI>().text = "Stone: " + resourceGenerator.cost[1].ToString();
+                    _stoneCostDisplay.GetComponent<TextMeshProUGUI>().text = "Stone: " + cost[1].ToString();
 
                     // Check whether or not there is enough of this resource to build this building
                     // If so, set the text colour to green, otherwise set it to red
-                    if (resourceManagerScript.stone >= resourceGenerator.cost[1])
+                    if (resourceManagerScript.stone >= cost[1])
                     {
                         _stoneCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCDPColor;
                     }
@@ -158,11 +174,11 @@ public class BuildManager : MonoBehaviour
                 if (_foodCostDisplay != null)
                 {
                     // Update the text display for food
-                    _foodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Food: " + resourceGenerator.cost[2].ToString();
+                    _foodCostDisplay.GetComponent<TextMeshProUGUI>().text = "Food: " + cost[2].ToString();
 
                     // Check whether or not there is enough of this resource to build this building
                     // If so, set the text colour to green, otherwise set it to red
-                    if (resourceManagerScript.food >= resourceGenerator.cost[2])
+                    if (resourceManagerScript.food >= cost[2])
                     {
                         _foodCostDisplay.GetComponent<TextMeshProUGUI>().color = canAffordCDPColor;
                     }
@@ -311,10 +327,13 @@ public class BuildManager : MonoBehaviour
                         currentPreview.tag = "BuildingPreview";
 
                         // Disaable the resource generator
-                        currentPreview.GetComponent<ResourceGenerator>().enabled = false;
+                        ResourceGenerator resourceGenerator = currentPreview.GetComponent<ResourceGenerator>();
+                        if (resourceGenerator != null) {
+                            resourceGenerator.enabled = false;
 
-                        // Hide the progress bar
-                        currentPreview.GetComponent<ResourceGenerator>().generationProgressBar.SetActive(false);
+                            // Hide the progress bar
+                            resourceGenerator.generationProgressBar.SetActive(false);
+                        }
                     }
                 } else // If there are an insufficient number of slots, alert the player
                 {
@@ -503,11 +522,28 @@ public class BuildManager : MonoBehaviour
         if (currentPreview != null && selectedBuilding != null)
         {
 
+            int woodRequired = -1;
+            int stoneRequired = -1;
+            int foodRequired = -1;
+
             ResourceGenerator resourceGenerator = currentPreview.GetComponent<ResourceGenerator>();
 
-            int woodRequired = resourceGenerator.cost[0];
-            int stoneRequired = resourceGenerator.cost[1];
-            int foodRequired = resourceGenerator.cost[2];
+            if (resourceGenerator != null)
+            {
+                woodRequired = resourceGenerator.cost[0];
+                stoneRequired = resourceGenerator.cost[1];
+                foodRequired = resourceGenerator.cost[2];
+            } else
+            {
+                BarracksManager barracksManager = currentPreview.GetComponent<BarracksManager>();
+
+                if (barracksManager != null)
+                {
+                    woodRequired = barracksManager.cost[0];
+                    stoneRequired = barracksManager.cost[1];
+                    foodRequired = barracksManager.cost[2];
+                }
+            }
 
             ResourceManager resourceManagerScript = _resourceManager.GetComponent<ResourceManager>();
 
@@ -579,11 +615,30 @@ public class BuildManager : MonoBehaviour
 
         // Make sure a prefab is selected
         if (currentPreview != null && selectedBuilding != null) {
+
+            int woodRequired = -1;
+            int stoneRequired = -1;
+            int foodRequired = -1;
+
             ResourceGenerator resourceGenerator = currentPreview.GetComponent<ResourceGenerator>();
 
-            int woodRequired = resourceGenerator.cost[0];
-            int stoneRequired = resourceGenerator.cost[1];
-            int foodRequired = resourceGenerator.cost[2];
+            if (resourceGenerator != null)
+            {
+                woodRequired = resourceGenerator.cost[0];
+                stoneRequired = resourceGenerator.cost[1];
+                foodRequired = resourceGenerator.cost[2];
+            }
+            else
+            {
+                BarracksManager barracksManager = currentPreview.GetComponent<BarracksManager>();
+
+                if (barracksManager != null)
+                {
+                    woodRequired = barracksManager.cost[0];
+                    stoneRequired = barracksManager.cost[1];
+                    foodRequired = barracksManager.cost[2];
+                }
+            }
 
             ResourceManager resourceManagerScript = _resourceManager.GetComponent<ResourceManager>();
 
@@ -599,7 +654,10 @@ public class BuildManager : MonoBehaviour
             {
 
                 // Enable the resource generator
-                resourceGenerator.enabled = true;
+                if (resourceGenerator != null)
+                {
+                    resourceGenerator.enabled = true;
+                }
 
                 // Update material render mode to opaque
                 //ToOpaqueMode(currentPreview.GetComponent<MeshRenderer>().material);
@@ -621,7 +679,10 @@ public class BuildManager : MonoBehaviour
                 }
 
                 // Set the reference to the camera
-                resourceGenerator._camera = _camera;
+                if (resourceGenerator != null)
+                {
+                    resourceGenerator._camera = _camera;
+                }
 
                 // Update the building's tag
                 currentPreview.tag = "Building";
