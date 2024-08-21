@@ -23,8 +23,8 @@ public class PlayerWeapon : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) // Left click to attack
         {
-                if (BuildManager.currentPreview == null) // Not building
-                {
+            if (BuildManager.currentPreview == null) // Not building
+            {
                 if (currentHash == idleHash && isPlayingAnimation == false)
                 {
                     // Animation is not playing so start a swing animation
