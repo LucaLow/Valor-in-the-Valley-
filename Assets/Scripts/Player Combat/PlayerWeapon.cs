@@ -21,12 +21,14 @@ public class PlayerWeapon : MonoBehaviour
     {
         int currentHash = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
 
-        if (Input.GetMouseButtonDown(0)) // Left click to attack
+        if (Input.GetMouseButton(0)) // Left click to attack
         {
             if (BuildManager.currentPreview == null) // Not building
             {
                 if (currentHash == idleHash && isPlayingAnimation == false)
                 {
+                    isPlayingAnimation = true;
+
                     // Animation is not playing so start a swing animation
 
                     // Select a random animation to play
@@ -38,6 +40,8 @@ public class PlayerWeapon : MonoBehaviour
 
                     // Adjust the direction for any consecutively played animations
                     nextDirection = "left";
+
+                    return;
                 }
                 else
                 {
