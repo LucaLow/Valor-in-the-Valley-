@@ -53,6 +53,9 @@ public class FriendlyAIDirector : MonoBehaviour
     {
         if (Input.GetKeyDown(toggle))
         {
+            if (startDirectingAnimation != null)
+                return;
+
             if (isDirecting == false)
             {
                 if (stopDirectingAnimation != null)
