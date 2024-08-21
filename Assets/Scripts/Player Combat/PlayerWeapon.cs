@@ -14,22 +14,61 @@ public class PlayerWeapon : MonoBehaviour
 
     private string queuedAnimation = "";
     private bool isPlayingAnimation = false;
-    private Coroutine clickLoop;
 
     private const int idleHash = 1870961784;
 
     private void Update()
     {
+        int currentHash = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0)) // Left click to attack
         {
-            clickLoop = StartCoroutine(LoopClicks());
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (clickLoop != null)
-                StopCoroutine(clickLoop);
-            clickLoop = null;
+            if (BuildManager.currentPreview == null) // Not building
+            {
+                if (currentHash == idleHash && isPlayingAnimation == false)
+                {
+                    InitiateAnimation();
+
+                    // Animation is not playing so start a swing animation
+
+                    // Select a random animation to play
+                    int firstSwingIndex = Random.Range(0, fromRightAnimations.Length);
+                    string firstSwing = fromRightAnimations[firstSwingIndex];
+
+                    // Play the random animation
+                    animator.SetTrigger(firstSwing);
+
+                    // Adjust the direction for any consecutively played animations
+                    nextDirection = "left";
+                }
+                else
+                {
+                    if (isPlayingAnimation && string.IsNullOrEmpty(queuedAnimation))
+                    {
+                        if (nextDirection == "left")
+                        {
+                            // Select a random animation to play
+                            int swingIndex = Random.Range(0, fromLeftAnimations.Length);
+                            string swing = fromLeftAnimations[swingIndex];
+
+                            // Queue the swing animation
+                            queuedAnimation = swing;
+                        }
+                        else if (nextDirection == "right")
+                        {
+                            // Select a random animation to play
+                            int swingIndex = Random.Range(0, fromRightAnimations.Length);
+                            string swing = fromRightAnimations[swingIndex];
+
+                            // Queue the swing animation
+                            queuedAnimation = swing;
+                        }
+
+                        // Alternate swing direction
+                        nextDirection = nextDirection == "left" ? "right" : "left";
+                    }
+                }
+            }
         }
 
         if (isPlayingAnimation == false && string.IsNullOrEmpty(queuedAnimation) == false)
@@ -39,69 +78,6 @@ public class PlayerWeapon : MonoBehaviour
             //print("Setting trigger: " + queuedAnimation);
             animator.SetTrigger(queuedAnimation);
             queuedAnimation = "";
-        }
-    }
-
-    private IEnumerator LoopClicks()
-    {
-        int currentHash = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
-
-        if (BuildManager.currentPreview == null) // Not building
-        {
-            if (currentHash == idleHash && isPlayingAnimation == false)
-            {
-                InitiateAnimation();
-
-                // Animation is not playing so start a swing animation
-
-                // Select a random animation to play
-                int firstSwingIndex = Random.Range(0, fromRightAnimations.Length);
-                string firstSwing = fromRightAnimations[firstSwingIndex];
-
-                // Play the random animation
-                animator.SetTrigger(firstSwing);
-
-                // Adjust the direction for any consecutively played animations
-                nextDirection = "left";
-            }
-            else
-            {
-                if (isPlayingAnimation && string.IsNullOrEmpty(queuedAnimation))
-                {
-                    if (nextDirection == "left")
-                    {
-                        // Select a random animation to play
-                        int swingIndex = Random.Range(0, fromLeftAnimations.Length);
-                        string swing = fromLeftAnimations[swingIndex];
-
-                        // Queue the swing animation
-                        queuedAnimation = swing;
-                    }
-                    else if (nextDirection == "right")
-                    {
-                        // Select a random animation to play
-                        int swingIndex = Random.Range(0, fromRightAnimations.Length);
-                        string swing = fromRightAnimations[swingIndex];
-
-                        // Queue the swing animation
-                        queuedAnimation = swing;
-                    }
-
-                    // Alternate swing direction
-                    nextDirection = nextDirection == "left" ? "right" : "left";
-                }
-            }
-        }
-
-        yield return new WaitForSeconds(0.2f);
-
-        if (Input.GetMouseButton(0))
-        {
-            clickLoop = StartCoroutine(LoopClicks());
-        }
-        else
-        {
-            clickLoop = null;
         }
     }
 
