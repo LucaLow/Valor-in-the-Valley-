@@ -27,7 +27,7 @@ public class PlayerWeapon : MonoBehaviour
             {
                 if (currentHash == idleHash && isPlayingAnimation == false)
                 {
-                    isPlayingAnimation = true;
+                    InitiateAnimation();
 
                     // Animation is not playing so start a swing animation
 
@@ -40,8 +40,6 @@ public class PlayerWeapon : MonoBehaviour
 
                     // Adjust the direction for any consecutively played animations
                     nextDirection = "left";
-
-                    return;
                 }
                 else
                 {
