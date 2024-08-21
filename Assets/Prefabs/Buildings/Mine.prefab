@@ -370,7 +370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resourceManager: {fileID: 0}
-  _camera: {fileID: 0}
   generationProgressBar: {fileID: 8396256466148548521}
   generationProgressFill: {fileID: 1006208311886826739}
   _generatedDisplay: {fileID: 7416850066569831961, guid: 4bbce29c4bde34545a72fb7996661d8d,

@@ -267,7 +267,7 @@ public class UpgradeManager : MonoBehaviour
             }
             else
             {
-                if (building.GetComponent<BarracksManager>() == null)
+                if (building == null)
                 {
                     progressRadialManager.occupant = null;
                 }
