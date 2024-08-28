@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Unity Mini Game Project.unity
     guid: 85488b31eafd46d4fa1035cf92dfe1c3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Backups/Backup.unity
     guid: b9ec06fbc9038574da9e976cf2a30610
+  - enabled: 1
+    path: Assets/Scenes/CurrentMainScene.unity
+    guid: 28a6aa39762dd644e8646b9b54254e31
   m_configObjects: {}
