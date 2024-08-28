@@ -5,14 +5,20 @@ using UnityEngine;
 public class HealthDamager : MonoBehaviour
 {
     public float damage = 25f;
+    public string filterTag;
 
     private void OnTriggerEnter(Collider other)
     {
-        Health healthComponent = other.GetComponent<Health>();
-
-        if (healthComponent != null)
+        if (other.transform.CompareTag(filterTag) == false)
         {
-            healthComponent.TakeDamage(damage);
+            print(transform.parent.name + "    " + other.transform.parent.name);
+
+            Health healthComponent = other.GetComponent<Health>();
+            healthComponent = healthComponent == null ? other.GetComponentInParent<Health>() : null;
+            if (healthComponent != null)
+            {
+                healthComponent.TakeDamage(damage);
+            }
         }
     }
 }
