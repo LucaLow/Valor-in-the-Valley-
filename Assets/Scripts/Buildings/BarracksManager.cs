@@ -9,6 +9,10 @@ public class BarracksManager : MonoBehaviour
     // Placement cost
     public int[] cost;
 
+    public GameObject troopPrefab;
+    public Transform troopSpawnPoint;
+    public Transform troopParent;
+
     [Space]
 
     public int maxTroops;
@@ -30,6 +34,8 @@ public class BarracksManager : MonoBehaviour
     private void SpawnTroop()
     {
         Debug.Log("Troop Spawned");
+
+        GameObject newTroop = Instantiate(troopPrefab, troopSpawnPoint.position, Quaternion.identity, troopParent);
     }
 
     void Start()
@@ -52,10 +58,8 @@ public class BarracksManager : MonoBehaviour
                 SpawnTroop();
             }
 
-
-            progressBar.SetActive(true);
-
             // Update Progress Display
+            progressBar.SetActive(true);
             queueDisplay.GetComponent<TextMeshProUGUI>().text = "Queued: " + troopsQueued;
             generationProgressFill.GetComponent<UnityEngine.UI.Image>().fillAmount = timeTraining / trainTime;
 
