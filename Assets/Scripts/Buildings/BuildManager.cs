@@ -80,6 +80,10 @@ public class BuildManager : MonoBehaviour
     public GameObject _alertUI;
     public GameObject _buildLimitProgressDisplay;
 
+    [Space]
+
+    public Transform troopParent;
+
     UnityEngine.Color previewColor;
 
     // PARAMETERS & SETTINGS !!!
@@ -637,6 +641,7 @@ public class BuildManager : MonoBehaviour
                     woodRequired = barracksManager.cost[0];
                     stoneRequired = barracksManager.cost[1];
                     foodRequired = barracksManager.cost[2];
+                    barracksManager.troopParent = troopParent;
                 }
             }
 
