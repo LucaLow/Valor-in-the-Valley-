@@ -10,7 +10,7 @@ public class MainMenuCode : MonoBehaviour
     public void StartGameBtn()
     {
         print("Start game");
-        SceneManager.LoadScene("Backup");
+        SceneManager.LoadScene("CurrentMainScene");
     }
 
     public void ExitGameBtn()

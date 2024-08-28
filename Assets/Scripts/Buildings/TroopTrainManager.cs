@@ -152,7 +152,26 @@ public class TroopTrainManager : MonoBehaviour
 
                 // Update the UI Display
                 currentTroopsLabel.GetComponent<TextMeshProUGUI>().text = barracksManager.currentTroops.ToString() + " / " + barracksManager.maxTroops.ToString();
-                costLabel.GetComponent<TextMeshProUGUI>().text = "Food: " + trainingCost.ToString();
+
+                if (barracksManager.currentTroops < barracksManager.maxTroops)
+                {
+
+                    costLabel.GetComponent<TextMeshProUGUI>().text = "Food: " + trainingCost.ToString();
+
+                    if (_resourceManager.GetComponent<ResourceManager>().food >= trainingCost)
+                    {
+                        costLabel.GetComponent<TextMeshProUGUI>().color = canAffordCostColor;
+                    }
+                    else
+                    {
+                        costLabel.GetComponent<TextMeshProUGUI>().color = cantAffordCostColor;
+                    }
+
+                } else
+                {
+                    costLabel.GetComponent<TextMeshProUGUI>().color = new Color(1f, 1f, 1f, 1f);
+                    costLabel.GetComponent<TextMeshProUGUI>().text = "FULL!";
+                }
 
             } else
             {
