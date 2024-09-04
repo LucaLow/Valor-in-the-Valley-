@@ -9777,7 +9777,7 @@ PrefabInstance:
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
@@ -10792,7 +10792,7 @@ PrefabInstance:
     - target: {fileID: 8736104707347245294, guid: 24d432d831378154b9ee324d810d9a85,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8736104707347245294, guid: 24d432d831378154b9ee324d810d9a85,
         type: 3}
@@ -12750,6 +12750,8 @@ MonoBehaviour:
   blacklistedTags:
   - Building
   - Player
+  - Enemy
+  - Friendly
   _resourceManager: {fileID: 1816345134}
   _buildingsParent: {fileID: 1693655260}
   _costDisplayPanel: {fileID: 810795822}
