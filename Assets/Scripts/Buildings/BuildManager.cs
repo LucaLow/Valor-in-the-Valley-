@@ -412,11 +412,13 @@ public class BuildManager : MonoBehaviour
     }
 
     // Update preview collision function
-    // Sets the collision of each of the building's children to the desired value\
+    // Sets the collision of each of the building's children to the desired value
     // E.G. If the value is false, collision is disabled
 
     private void UpdatePreviewCollision(bool collisionsEnabled)
     {
+        
+        currentPreview.GetComponent<Collider>().enabled = collisionsEnabled;
 
         foreach (Transform child in currentPreview.GetComponentInChildren<Transform>())
         {
@@ -461,6 +463,10 @@ public class BuildManager : MonoBehaviour
             }
 
         }
+
+        // Also toggle the nav mesh obstacle component of the building
+        currentPreview.GetComponent<UnityEngine.AI.NavMeshObstacle>().enabled = collisionsEnabled;
+        
     }
 
     // https://forum.unity.com/threads/change-rendering-mode-via-script.476437/
