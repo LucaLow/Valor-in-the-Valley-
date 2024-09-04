@@ -9876,6 +9876,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5354850369261256226, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
+      propertyPath: _canvas
+      value: 
+      objectReference: {fileID: 711131106}
+    - target: {fileID: 5354850369261256226, guid: eecc22600b02ccd45b002cf3d2d40bcb,
+        type: 3}
+      propertyPath: _alertUI
+      value: 
+      objectReference: {fileID: 7517647415169628529, guid: 24f2d7bfcbd304548af18de07bfba83b,
+        type: 3}
+    - target: {fileID: 5354850369261256226, guid: eecc22600b02ccd45b002cf3d2d40bcb,
+        type: 3}
       propertyPath: _buildManager
       value: 
       objectReference: {fileID: 2113982507}

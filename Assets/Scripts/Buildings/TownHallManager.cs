@@ -23,6 +23,14 @@ public class TownHallManager : MonoBehaviour
     public int[] stoneCosts;
     public int[] foodCosts;
 
+    [Space]
+
+    // Alert UI related objects
+    public Transform _canvas;
+    public GameObject _alertUI;
+
+    bool displayNewLimit = false;
+
     private void Start()
     {
         buildManager = _buildManager.GetComponent<BuildManager>();
@@ -50,6 +58,18 @@ public class TownHallManager : MonoBehaviour
         {
             _limitUpgradeInfoDisplay.GetComponent<TextMeshProUGUI>().text = "MAX LEVEL";
         }
+
+        // Create an alert to notify the player of how many slots were gained
+        if (displayNewLimit)
+        {
+            GameObject slotsAlert = Instantiate(_alertUI, _canvas);
+
+            int slotsGained = buildLimits[level] - buildLimits[level - 1];
+            slotsAlert.GetComponent<TextMeshProUGUI>().text = "+" + slotsGained + " building slots unlocked!";
+            slotsAlert.GetComponent<TextMeshProUGUI>().color = new Color(0, 1f, 0, 1f);
+        }
+
+        displayNewLimit = true;
 
     }
 
