@@ -9,6 +9,10 @@ public class BarracksManager : MonoBehaviour
     // Placement cost
     public int[] cost;
 
+    public GameObject troopPrefab;
+    public Transform troopSpawnPoint;
+    public Transform troopParent;
+
     [Space]
 
     public int maxTroops;
@@ -17,6 +21,8 @@ public class BarracksManager : MonoBehaviour
     public int troopsQueued = 0;
 
     public Transform _camera { get; set; }
+
+    public List<GameObject> spawnedTroops = new List<GameObject>();
 
     [Space]
 
@@ -29,7 +35,9 @@ public class BarracksManager : MonoBehaviour
 
     private void SpawnTroop()
     {
-        Debug.Log("Troop Spawned");
+        GameObject newTroop = Instantiate(troopPrefab, troopSpawnPoint.position, Quaternion.identity, troopParent);
+
+        spawnedTroops.Add(newTroop);
     }
 
     void Start()
@@ -38,12 +46,14 @@ public class BarracksManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+
+        CheckForDeadTroops();
+
         if (troopsQueued > 0)
         {
-            timeTraining += Time.deltaTime;
+            timeTraining += Time.fixedDeltaTime;
 
             if (timeTraining > trainTime)
             {
@@ -52,10 +62,8 @@ public class BarracksManager : MonoBehaviour
                 SpawnTroop();
             }
 
-
-            progressBar.SetActive(true);
-
             // Update Progress Display
+            progressBar.SetActive(true);
             queueDisplay.GetComponent<TextMeshProUGUI>().text = "Queued: " + troopsQueued;
             generationProgressFill.GetComponent<UnityEngine.UI.Image>().fillAmount = timeTraining / trainTime;
 
@@ -72,4 +80,26 @@ public class BarracksManager : MonoBehaviour
         }
 
     }
+
+    // Check to see if any troops have died
+    // If they have, clear up space for training
+
+    // Deaths are detected by checking for missing objects
+    // If any are found then it means they were destroyed
+    // This code might need to be changed if an object pooling system is implemented
+
+    void CheckForDeadTroops()
+    {
+
+        int priorLength = spawnedTroops.Count;
+
+        spawnedTroops.RemoveAll(x => x == null);
+
+        if (priorLength != spawnedTroops.Count) {
+            currentTroops = troopsQueued + spawnedTroops.Count;
+            Debug.Log(priorLength);
+        }
+        
+    }
+
 }
