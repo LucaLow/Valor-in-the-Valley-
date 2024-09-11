@@ -11575,9 +11575,9 @@ MonoBehaviour:
   wood: 0
   stone: 0
   food: 0
-  defaultWood: 106
-  defaultStone: 79
-  defaultFood: 108
+  defaultWood: 0
+  defaultStone: 0
+  defaultFood: 0
   _woodDisplay: {fileID: 837653243}
   _stoneDisplay: {fileID: 841020308}
   _foodDisplay: {fileID: 1375686508}
