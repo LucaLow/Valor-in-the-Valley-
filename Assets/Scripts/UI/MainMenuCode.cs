@@ -1,12 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuCode : MonoBehaviour
 {
     public GameObject settingsPage;
     public GameObject mainPage;
+
+    public Slider FOVSlider;
+    public Slider SensitvitiySlider;
+    public Slider VolumeSlider;
+
+
     public void StartGameBtn()
     {
         print("Start game");
@@ -28,5 +36,19 @@ public class MainMenuCode : MonoBehaviour
     {
         settingsPage.SetActive(false);
         mainPage.SetActive(true);
+    }
+
+    public void ChangeVolume()
+    {
+        StaticVariables.Volume = VolumeSlider.value;
+    }
+    public void ChangeSensitivity()
+    {
+        StaticVariables.MouseSensitivity = SensitvitiySlider.value;
+    }
+    public void ChangeFOV()
+    {
+        float fov = FOVSlider.value;
+        StaticVariables.CameraFOV = fov;
     }
 }
