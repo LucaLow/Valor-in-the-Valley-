@@ -4,6 +4,14 @@ using System.Resources;
 using TMPro;
 using UnityEngine;
 
+/*
+This code is admittedly a little bit of a mess as a result of how it worked in the original project.
+
+This could be improved significantly if the buildings used a base prefab,
+but we're a bit too far into developement to rewrite the code to such a degree,
+and this should work fine as long as we don't add too many more building types.
+*/
+
 public class UpgradeManager : MonoBehaviour
 {
 
@@ -50,6 +58,7 @@ public class UpgradeManager : MonoBehaviour
     {
         ResourceGenerator resourceGenerator = building.GetComponent<ResourceGenerator>();
         TownHallManager townHallManager = building.GetComponent<TownHallManager>();
+        BlacksmithManager blacksmithManager = building.GetComponent<BlacksmithManager>();
 
         int[] cost = {10, 10, 10};
 
@@ -81,6 +90,16 @@ public class UpgradeManager : MonoBehaviour
                 return cost;
             }
         }
+        else if (blacksmithManager != null)
+        {
+            int level = blacksmithManager.level;
+
+            if (level < blacksmithManager.maxLevel)
+            {
+                cost = new int[] {0, 0, blacksmithManager.costPerLevel[level] };
+                return cost;
+            }
+        }
 
         return null;
 
@@ -104,10 +123,13 @@ public class UpgradeManager : MonoBehaviour
         {
 
             TownHallManager townHallManager = building.GetComponent<TownHallManager>();
+            BlacksmithManager blacksmithManager = building.GetComponent<BlacksmithManager>();
 
             if (townHallManager != null)
             {
                 level = townHallManager.level;
+            } else if(blacksmithManager != null) {
+                level = blacksmithManager.level;
             }
 
         }
@@ -178,6 +200,7 @@ public class UpgradeManager : MonoBehaviour
 
         ResourceGenerator resourceGenerator = building.GetComponent<ResourceGenerator>();
         TownHallManager townHallManager = building.GetComponent<TownHallManager>();
+        BlacksmithManager blacksmithManager = building.GetComponent<BlacksmithManager>();
 
         int[] cost = GetUpgradeCost(building);
 
@@ -189,6 +212,10 @@ public class UpgradeManager : MonoBehaviour
         {
             townHallManager.level += 1;
             townHallManager.UpdateBuildingLimit();
+        } else if (blacksmithManager != null)
+        {
+            blacksmithManager.level += 1;
+            blacksmithManager.UpdateTroopStats();
         }
 
         // Subtract the cost from the player's resources

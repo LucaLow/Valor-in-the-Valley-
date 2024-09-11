@@ -53,6 +53,9 @@ public class BuildManager : MonoBehaviour
     // Reference to the buildings gameobject
     public Transform _buildingsParent;
 
+    public GameObject blacksmith;
+    BlacksmithManager blacksmithManager;
+
     [Space]
 
     // Reference to cost display panel
@@ -107,6 +110,8 @@ public class BuildManager : MonoBehaviour
         buildingPrefabDict.Add("Mine", buildingPrefabs[1]);
         buildingPrefabDict.Add("Farm", buildingPrefabs[2]);
         buildingPrefabDict.Add("Barracks", buildingPrefabs[3]);
+
+        blacksmithManager = blacksmith.GetComponent<BlacksmithManager>();
 
     }
 
@@ -648,6 +653,7 @@ public class BuildManager : MonoBehaviour
                     stoneRequired = barracksManager.cost[1];
                     foodRequired = barracksManager.cost[2];
                     barracksManager.troopParent = troopParent;
+                    barracksManager.blacksmithManager = blacksmithManager;
                 }
             }
 
