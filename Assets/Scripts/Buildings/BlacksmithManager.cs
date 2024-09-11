@@ -7,7 +7,14 @@ public class BlacksmithManager : MonoBehaviour
     public int level = 0;
     public int maxLevel = 3;
 
-    public int[] costPerLevel;
+    [Space]
+
+    public int[] woodCostPerLevel;
+    public int[] stoneCostPerLevel;
+    public int[] foodCostPerLevel;
+
+    [Space]
+
     public int[] healthPerLevel;
 
     [Space]

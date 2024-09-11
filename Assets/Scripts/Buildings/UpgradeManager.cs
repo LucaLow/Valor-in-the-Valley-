@@ -96,7 +96,7 @@ public class UpgradeManager : MonoBehaviour
 
             if (level < blacksmithManager.maxLevel)
             {
-                cost = new int[] {0, 0, blacksmithManager.costPerLevel[level] };
+                cost = new int[] {blacksmithManager.woodCostPerLevel[level], blacksmithManager.stoneCostPerLevel[level], blacksmithManager.foodCostPerLevel[level] };
                 return cost;
             }
         }
