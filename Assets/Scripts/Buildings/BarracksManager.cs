@@ -13,6 +13,8 @@ public class BarracksManager : MonoBehaviour
     public Transform troopSpawnPoint;
     public Transform troopParent;
 
+    public BlacksmithManager blacksmithManager;
+
     [Space]
 
     public int maxTroops;
@@ -36,6 +38,10 @@ public class BarracksManager : MonoBehaviour
     private void SpawnTroop()
     {
         GameObject newTroop = Instantiate(troopPrefab, troopSpawnPoint.position, Quaternion.identity, troopParent);
+
+        int newHealth = blacksmithManager.healthPerLevel[blacksmithManager.level];
+        newTroop.GetComponent<Health>().maxHealth = newHealth;
+        newTroop.GetComponent<Health>().health = newHealth;
 
         spawnedTroops.Add(newTroop);
     }
