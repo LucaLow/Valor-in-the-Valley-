@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -23,8 +24,11 @@ public class UpgradeManager : MonoBehaviour
     [Space]
 
     public GameObject UpgradePanelUI;
-
     public GameObject InfoDisplay;
+
+    [Space]
+
+    public string[] buildingTags = { "Building", "Town Hall", "Blacksmith" };
 
     [Space]
 
@@ -237,7 +241,7 @@ public class UpgradeManager : MonoBehaviour
 
         // Play the build sound
         AudioSource SFX = GetComponent<AudioSource>();
-        SFX.pitch = Random.Range(0.5f, 1f);
+        SFX.pitch = UnityEngine.Random.Range(0.5f, 1f);
 
         SFX.Play();
     }
@@ -329,7 +333,7 @@ public class UpgradeManager : MonoBehaviour
             GameObject rayTarget = ray.collider.gameObject;
 
             // If a building is found, update the upgrade UI to be visible
-            if (rayTarget && rayTarget.tag == "Building")
+            if (rayTarget && Array.IndexOf(buildingTags, rayTarget.tag) > -1) //buildingTags.Contains(rayTarget.tag))
             {
                 UpgradePanelUI.SetActive(true);
 

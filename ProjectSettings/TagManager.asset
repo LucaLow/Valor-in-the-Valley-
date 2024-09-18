@@ -8,6 +8,8 @@ TagManager:
   - BuildingPreview
   - Friendly
   - Enemy
+  - Blacksmith
+  - Town Hall
   layers:
   - Default
   - TransparentFX
