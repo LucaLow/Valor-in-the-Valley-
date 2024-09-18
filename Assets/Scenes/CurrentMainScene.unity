@@ -9637,6 +9637,16 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 3721430196445137319, guid: eecc22600b02ccd45b002cf3d2d40bcb,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721430196445137319, guid: eecc22600b02ccd45b002cf3d2d40bcb,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.33333334
+      objectReference: {fileID: 0}
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
       propertyPath: m_RootOrder
@@ -9644,8 +9654,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.725
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
@@ -9655,7 +9680,7 @@ PrefabInstance:
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 9.875
       objectReference: {fileID: 0}
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
@@ -12884,6 +12909,8 @@ MonoBehaviour:
   - Player
   - Enemy
   - Friendly
+  - Town Hall
+  - Blacksmith
   _resourceManager: {fileID: 1816345134}
   _buildingsParent: {fileID: 1693655260}
   blacksmith: {fileID: 1781418291082101834}
