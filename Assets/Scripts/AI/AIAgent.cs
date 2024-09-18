@@ -186,6 +186,7 @@ public class AIAgent : MonoBehaviour
 
         IEnumerator UpdateWanderPosition()
         {
+            yield return new WaitForSeconds(1);
             // Choose a 2d point in the range
             Vector2 point = Random.insideUnitCircle * wanderingState.wanderRange;
             // Sample that point on the nav mesh
