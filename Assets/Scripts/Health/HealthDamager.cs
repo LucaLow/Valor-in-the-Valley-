@@ -9,8 +9,6 @@ public class HealthDamager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
-
         if (other.transform.CompareTag(filterTag) == false)
         {
             Health healthComponent = other.GetComponent<Health>();
