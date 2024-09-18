@@ -13,7 +13,7 @@ public class Leaderboard : MonoBehaviour
     void Start()
     {
         // read leaderboard file
-        StreamReader sr = new StreamReader("Assets/Scripts/leaderboard.txt");
+        StreamReader sr = new StreamReader("Assets/Scripts/UI/leaderboard.txt");
         string line;
         //read each line of the file into the line variable
         while ((line= sr.ReadLine())!= null)
