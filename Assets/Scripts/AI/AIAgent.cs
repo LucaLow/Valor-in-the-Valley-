@@ -32,6 +32,8 @@ public class AIAgent : MonoBehaviour
     public MeleeAttackingStateSettings meleeAttackingState;
     public RangeAttackingStateSettings rangeAttackingState;
 
+    public List<GameObject> targets;
+
     [Space]
 
     public GizmoSettings gizmoSettings;
@@ -70,7 +72,7 @@ public class AIAgent : MonoBehaviour
     public void UpdateState()
     {
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, pursuingState.visionRange);
-        List<GameObject> targets = new List<GameObject>();
+        targets = new List<GameObject>();
 
         // Create the list of targets
         // The targets are objects with a specified tag in the range
@@ -99,8 +101,14 @@ public class AIAgent : MonoBehaviour
         if (targets.Count > 0)
         {
             // Sort the list of targets by distance
-            targets = SortList(targets);
+            targets = SortGameObjects(targets);
 
+            // List of targets in range, used for debugging
+            /*string targetListString = "";
+            foreach (GameObject target in targets)
+            {
+                targetListString += target.name + ", ";
+            }*/
 
             // Default to pursuing state
             if (brainState != BrainState.retreating)
@@ -167,13 +175,44 @@ public class AIAgent : MonoBehaviour
         brainState = BrainState.wandering;
     }
 
-    public List<GameObject> SortList(List<GameObject> list)
+    /*public List<GameObject> SortList(List<GameObject> list)
     {
+        // TODO: Sort the list based on tag (a public List<Tag> hostileTags) AND distance
+
         // Use LINQ to sort the list based on distance from referenceTransform
         List<GameObject> sortedList = list.OrderBy(go => Vector3.Distance(go.transform.position, transform.position)).ToList();
 
         return sortedList;
+    }*/
+
+    public List<GameObject> SortGameObjects(List<GameObject> gameObjects)
+    {
+        string[] tags = new string[hostileTagDistancePairs.Count];
+        for (int i = 0; i < tags.Length; i++)
+        {
+            tags[i] = hostileTagDistancePairs[i].tag;
+        }
+
+        // Filter and group by specified tags
+        var groupedByTag = gameObjects
+            .Where(go => tags.Contains(go.tag)) // Filter by target tags
+            .GroupBy(go => go.tag)
+            .OrderBy(g => g.Key); // Sort groups by tag
+
+        List<GameObject> sortedList = new List<GameObject>();
+
+        foreach (var group in groupedByTag)
+        {
+            // Sort by distance within each tag group
+            var sortedGroup = group.OrderBy(go => Vector3.Distance(go.transform.position, transform.position));
+            sortedList.AddRange(sortedGroup);
+        }
+
+        // Now sortedList contains the sorted GameObjects based on the target tags
+        // You can do whatever you need with the sorted list here
+        return sortedList;
     }
+
 
     public void FacilitateWander()
     {
