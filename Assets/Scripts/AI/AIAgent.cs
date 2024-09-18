@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class AIAgent : MonoBehaviour
 {
     public enum AgentType { Melee, Ranged }
-    public enum BrainState { wandering, pursuing, attacking, retreating }
+    public enum BrainState { wandering, pursuing, attacking, retreating, vegetable }
     public enum MovementState { idle, walking, running, attacking }
 
     [Tooltip("The type of agent that this AI will adopt.")]
@@ -42,7 +42,7 @@ public class AIAgent : MonoBehaviour
 
     private void Start()
     {
-        wanderingState.wanderRangePosition = transform.position;
+        //wanderingState.wanderRangePosition = transform.position;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -63,6 +63,8 @@ public class AIAgent : MonoBehaviour
                 break;
             case BrainState.retreating:
                 FacilitateRetreat();
+                break;
+            case BrainState.vegetable:
                 break;
         }
 
@@ -111,9 +113,13 @@ public class AIAgent : MonoBehaviour
             }*/
 
             // Default to pursuing state
-            if (brainState != BrainState.retreating)
-                brainState = BrainState.pursuing;
-            pursuingState.target = targets[0].transform;
+            float fDistance = Vector3.Distance( this.gameObject.transform.position, wanderingState.wanderRangePosition );
+            if( fDistance < 4.0f)
+            {
+                if ( brainState != BrainState.retreating )
+                    brainState = BrainState.pursuing;
+                pursuingState.target = targets[0].transform;
+            }
 
 
             switch (agentType)
@@ -172,7 +178,8 @@ public class AIAgent : MonoBehaviour
         }
 
         // Default to wandering state
-        brainState = BrainState.wandering;
+        if ( brainState != BrainState.vegetable )
+            brainState = BrainState.wandering;
     }
 
     /*public List<GameObject> SortList(List<GameObject> list)
