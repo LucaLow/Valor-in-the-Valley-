@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -23,8 +24,11 @@ public class UpgradeManager : MonoBehaviour
     [Space]
 
     public GameObject UpgradePanelUI;
-
     public GameObject InfoDisplay;
+
+    [Space]
+
+    public string[] buildingTags = { "Building", "Town Hall", "Blacksmith" };
 
     [Space]
 
@@ -40,6 +44,11 @@ public class UpgradeManager : MonoBehaviour
     // Upgrade display panel colours
     public Color canAffordCostColor;
     public Color cantAffordCostColor;
+
+    [Space]
+
+    public Transform _canvas;
+    public GameObject _alertUI;
 
     [Space]
 
@@ -216,6 +225,12 @@ public class UpgradeManager : MonoBehaviour
         {
             blacksmithManager.level += 1;
             blacksmithManager.UpdateTroopStats();
+
+            // Inform the player of their troops' new health when upgrading the blacksmith
+            GameObject slotsAlert = Instantiate(_alertUI, _canvas);
+            int newHealth = blacksmithManager.healthPerLevel[blacksmithManager.level] - blacksmithManager.healthPerLevel[blacksmithManager.level - 1];
+            slotsAlert.GetComponent<TextMeshProUGUI>().text = "+"+ newHealth +" Troop Health ("+ blacksmithManager.healthPerLevel[blacksmithManager.level] +")";
+            slotsAlert.GetComponent<TextMeshProUGUI>().color = new Color(0f, 1f, 0f, 1f);
         }
 
         // Subtract the cost from the player's resources
@@ -226,7 +241,7 @@ public class UpgradeManager : MonoBehaviour
 
         // Play the build sound
         AudioSource SFX = GetComponent<AudioSource>();
-        SFX.pitch = Random.Range(0.5f, 1f);
+        SFX.pitch = UnityEngine.Random.Range(0.5f, 1f);
 
         SFX.Play();
     }
@@ -318,7 +333,7 @@ public class UpgradeManager : MonoBehaviour
             GameObject rayTarget = ray.collider.gameObject;
 
             // If a building is found, update the upgrade UI to be visible
-            if (rayTarget && rayTarget.tag == "Building")
+            if (rayTarget && Array.IndexOf(buildingTags, rayTarget.tag) > -1) //buildingTags.Contains(rayTarget.tag))
             {
                 UpgradePanelUI.SetActive(true);
 

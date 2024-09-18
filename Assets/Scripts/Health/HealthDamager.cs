@@ -11,12 +11,11 @@ public class HealthDamager : MonoBehaviour
     {
         if (other.transform.CompareTag(filterTag) == false)
         {
-            print(transform.parent.name + "    " + other.transform.parent.name);
-
             Health healthComponent = other.GetComponent<Health>();
-            healthComponent = healthComponent == null ? other.GetComponentInParent<Health>() : null;
+            healthComponent = healthComponent == null ? other.GetComponentInParent<Health>() : healthComponent;
             if (healthComponent != null)
             {
+                Debug.Log(healthComponent.gameObject.name);
                 healthComponent.TakeDamage(damage);
             }
         }

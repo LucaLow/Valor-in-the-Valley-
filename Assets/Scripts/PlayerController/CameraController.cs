@@ -25,6 +25,12 @@ public class CameraController : MonoBehaviour
     public string horizontalInput = "Mouse X";
     public string verticalInput = "Mouse Y";
 
+    public void Start()
+    {
+        horizontalSensitivity = horizontalSensitivity * StaticVariables.MouseSensitivity/1.5f; 
+        verticalSensitivity = verticalSensitivity * StaticVariables.MouseSensitivity/1.5f;
+
+    }
     public void RotateCamera(Camera camera)
     {
         // Get the mouse input

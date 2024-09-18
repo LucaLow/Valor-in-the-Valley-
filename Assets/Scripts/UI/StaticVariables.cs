@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public static class StaticVariables
 {
-    public static float Volume;
-    public static float MouseSensitivity;
-    public static float CameraFOV;
+    public static float Volume = 50;
+    public static float MouseSensitivity = 5;
+    public static float CameraFOV = 85;
 }

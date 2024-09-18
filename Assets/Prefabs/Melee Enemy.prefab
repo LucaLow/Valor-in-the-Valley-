@@ -364,9 +364,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentType: 0
   brainState: 0
-  hostileTags:
-  - Friendly
-  - Player
+  hostileTagDistancePairs:
+  - tag: Town Hall
+    distance: 5
+  - tag: Friendly
+    distance: 1
+  - tag: Player
+    distance: 1
+  - tag: Building
+    distance: 5
   wanderingState:
     speed: 3.5
     wanderRange: 10
@@ -376,7 +382,6 @@ MonoBehaviour:
     visionRange: 25
   meleeAttackingState:
     speed: 5
-    attackRange: 2
   rangeAttackingState:
     projectilePrefab: {fileID: 0}
     attackRate: 1
@@ -385,6 +390,7 @@ MonoBehaviour:
     attackRange: 20
     retreatDistance: 14
     retreatSpeed: 8
+  targets: []
   gizmoSettings:
     wanderingGizmos: 0
     pursuingGizmos: 0

@@ -29,7 +29,13 @@ public class CameraEffects : MonoBehaviour
     private void Start()
     {
         defaultPosition = transform.localPosition;
-    }
+
+        // mess with FOV depending on the users settings.
+        movementFOVAdjustmentsSettings.sprintingFOV = 70f * StaticVariables.CameraFOV / 85;
+        movementFOVAdjustmentsSettings.movingForwardFOV = 63f * StaticVariables.CameraFOV / 85;
+        movementFOVAdjustmentsSettings.movingBackwardFOV = 57f * StaticVariables.CameraFOV / 85;
+        movementFOVAdjustmentsSettings.idleFOV = 60f * StaticVariables.CameraFOV / 85;
+}
 
     private void Update()
     {
