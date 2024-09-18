@@ -43,6 +43,11 @@ public class UpgradeManager : MonoBehaviour
 
     [Space]
 
+    public Transform _canvas;
+    public GameObject _alertUI;
+
+    [Space]
+
     public float rayLength = 0f;
 
     GameObject buildingUpgrading = null;
@@ -216,6 +221,12 @@ public class UpgradeManager : MonoBehaviour
         {
             blacksmithManager.level += 1;
             blacksmithManager.UpdateTroopStats();
+
+            // Inform the player of their troops' new health when upgrading the blacksmith
+            GameObject slotsAlert = Instantiate(_alertUI, _canvas);
+            int newHealth = blacksmithManager.healthPerLevel[blacksmithManager.level] - blacksmithManager.healthPerLevel[blacksmithManager.level - 1];
+            slotsAlert.GetComponent<TextMeshProUGUI>().text = "+"+ newHealth +" Troop Health ("+ blacksmithManager.healthPerLevel[blacksmithManager.level] +")";
+            slotsAlert.GetComponent<TextMeshProUGUI>().color = new Color(0f, 1f, 0f, 1f);
         }
 
         // Subtract the cost from the player's resources

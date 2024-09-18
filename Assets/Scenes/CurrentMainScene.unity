@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1406.5469, g: 3444.5303, b: 5487.586, a: 1}
+  m_IndirectSpecularColor: {r: 1406.9177, g: 3436.6914, b: 5491.451, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12846,6 +12846,9 @@ MonoBehaviour:
   _progressRadial: {fileID: 19868858}
   canAffordCostColor: {r: 0, g: 1, b: 0, a: 1}
   cantAffordCostColor: {r: 1, g: 0, b: 0, a: 1}
+  _canvas: {fileID: 711131106}
+  _alertUI: {fileID: 7517647415169628529, guid: 24f2d7bfcbd304548af18de07bfba83b,
+    type: 3}
   rayLength: 8
 --- !u!114 &2113982511
 MonoBehaviour:
