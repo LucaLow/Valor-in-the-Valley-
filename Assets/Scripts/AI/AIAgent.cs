@@ -24,13 +24,15 @@ public class AIAgent : MonoBehaviour
     [Space]
 
     [Tooltip("The tag(s) of gameobjects that which this agent will be hostile towards. Priority goes from top to bottom")]
-    public List<string> hostileTags;
+    public List<TagDistancePair> hostileTagDistancePairs;
 
 
     public WanderingStateSettings wanderingState;
     public PursuingStateSettings pursuingState;
     public MeleeAttackingStateSettings meleeAttackingState;
     public RangeAttackingStateSettings rangeAttackingState;
+
+    public List<GameObject> targets;
 
     [Space]
 
@@ -70,14 +72,15 @@ public class AIAgent : MonoBehaviour
     public void UpdateState()
     {
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, pursuingState.visionRange);
-        List<GameObject> targets = new List<GameObject>();
+        targets = new List<GameObject>();
 
         // Create the list of targets
         // The targets are objects with a specified tag in the range
         for (int i = 0; i < objectsInRange.Length; i++)
         {
-            foreach (string tag in hostileTags)
+            foreach (TagDistancePair tagDistancePair in hostileTagDistancePairs)
             {
+                string tag = tagDistancePair.tag;
                 if (objectsInRange[i].CompareTag(tag))
                 {
                     targets.Add(objectsInRange[i].gameObject);
@@ -98,8 +101,14 @@ public class AIAgent : MonoBehaviour
         if (targets.Count > 0)
         {
             // Sort the list of targets by distance
-            targets = SortList(targets);
+            targets = SortGameObjects(targets);
 
+            // List of targets in range, used for debugging
+            /*string targetListString = "";
+            foreach (GameObject target in targets)
+            {
+                targetListString += target.name + ", ";
+            }*/
 
             // Default to pursuing state
             if (brainState != BrainState.retreating)
@@ -114,10 +123,13 @@ public class AIAgent : MonoBehaviour
 
                     meleeAttackingState.target = targets[0].transform;
 
-                    if (Vector3.Distance(transform.position, targets[0].transform.position) <= meleeAttackingState.attackRange)
+                    foreach (TagDistancePair tagDistancePair in hostileTagDistancePairs)
                     {
-                        // Attacking state
-                        brainState = BrainState.attacking;
+                        if (Vector3.Distance(transform.position, targets[0].transform.position) <= tagDistancePair.distance)
+                        {
+                            // Attacking state
+                            brainState = BrainState.attacking;
+                        }
                     }
 
                     break;
@@ -163,13 +175,47 @@ public class AIAgent : MonoBehaviour
         brainState = BrainState.wandering;
     }
 
-    public List<GameObject> SortList(List<GameObject> list)
+    /*public List<GameObject> SortList(List<GameObject> list)
     {
+        // TODO: Sort the list based on tag (a public List<Tag> hostileTags) AND distance
+
         // Use LINQ to sort the list based on distance from referenceTransform
         List<GameObject> sortedList = list.OrderBy(go => Vector3.Distance(go.transform.position, transform.position)).ToList();
 
         return sortedList;
+    }*/
+
+    public List<GameObject> SortGameObjects(List<GameObject> gameObjects)
+    {
+        string[] tags = new string[hostileTagDistancePairs.Count];
+        for (int i = 0; i < tags.Length; i++)
+        {
+            tags[i] = hostileTagDistancePairs[i].tag;
+        }
+
+        // Create a dictionary to maintain the order of target tags
+        var tagOrder = tags.Select((tag, index) => new { tag, index })
+                                 .ToDictionary(x => x.tag, x => x.index);
+
+        // Filter and group by specified tags
+        var groupedByTag = gameObjects
+            .Where(go => tags.Contains(go.tag)) // Filter by target tags
+            .GroupBy(go => go.tag)
+            .OrderBy(g => tagOrder[g.Key]); // Sort groups by the order in targetTags
+
+        List<GameObject> sortedList = new List<GameObject>();
+
+        foreach (var group in groupedByTag)
+        {
+            // Sort by distance within each tag group
+            var sortedGroup = group.OrderBy(go => Vector3.Distance(go.transform.position, transform.position));
+            sortedList.AddRange(sortedGroup);
+        }
+        // Now sortedList contains the sorted GameObjects based on the target tags
+        // You can do whatever you need with the sorted list here
+        return sortedList;
     }
+
 
     public void FacilitateWander()
     {
@@ -224,7 +270,16 @@ public class AIAgent : MonoBehaviour
             // Melee attacks
             case AgentType.Melee:
                 agent.speed = meleeAttackingState.speed;
-                agent.stoppingDistance = meleeAttackingState.attackRange;
+                if (meleeAttackingState.target != null)
+                {
+                    foreach (TagDistancePair tagDistancePair in hostileTagDistancePairs)
+                    {
+                        if (meleeAttackingState.target.CompareTag(tagDistancePair.tag))
+                        {
+                            agent.stoppingDistance = tagDistancePair.distance;
+                        }
+                    }
+                }
                 break;
             // Ranged attacks
             case AgentType.Ranged:
@@ -337,7 +392,6 @@ public class AIAgent : MonoBehaviour
         if (gizmoSettings.meleeGizmos && agentType == AgentType.Melee)
         {
             Gizmos.color = gizmoSettings.meleeGizmosColor;
-            Gizmos.DrawWireSphere(transform.position, meleeAttackingState.attackRange);
             DrawGizmoPath();
         }
         if (gizmoSettings.rangeGizmos && agentType == AgentType.Ranged)
@@ -389,9 +443,9 @@ public class AIAgent : MonoBehaviour
         // Add the agent component
         AIAgent AIAgent = agentObject.AddComponent<AIAgent>();
         // Set the hostile tags
-        AIAgent.hostileTags = new List<string>
+        AIAgent.hostileTagDistancePairs = new List<TagDistancePair>
         {
-            "Enemy"
+            new TagDistancePair("Enemy", 3)
         };
 
         // Add a health component
@@ -427,9 +481,9 @@ public class AIAgent : MonoBehaviour
         // Add the agent component
         AIAgent AIAgent = agentObject.AddComponent<AIAgent>();
         // Set the hostile tags
-        AIAgent.hostileTags = new List<string>
+        AIAgent.hostileTagDistancePairs = new List<TagDistancePair>
         {
-            "Friendly"
+            new TagDistancePair("Friendly", 3)
         };
 
         // Create temporary capsule graphics
@@ -447,6 +501,19 @@ public class AIAgent : MonoBehaviour
 
 
     #region Classes
+
+    [System.Serializable]
+    public class TagDistancePair
+    {
+        public string tag;
+        public float distance = 3;
+
+        public TagDistancePair(string tag, float distance)
+        {
+            this.tag = tag;
+            this.distance = distance;
+        }
+    }
 
     [System.Serializable]
     public class WanderingStateSettings
@@ -487,8 +554,6 @@ public class AIAgent : MonoBehaviour
     {
         [Tooltip("The movement speed of the agent in this state.")]
         public float speed = 5f;
-        [Tooltip("The maximum distance the agent must be within to attack the target.")]
-        public float attackRange = 2f;
 
 
         // The target that the agent will be chasing
