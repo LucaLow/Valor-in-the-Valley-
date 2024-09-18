@@ -9479,7 +9479,7 @@ PrefabInstance:
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 10.5
       objectReference: {fileID: 0}
     - target: {fileID: 3721430196445137320, guid: eecc22600b02ccd45b002cf3d2d40bcb,
         type: 3}
@@ -12675,6 +12675,8 @@ MonoBehaviour:
   - Player
   - Enemy
   - Friendly
+  - Town Hall
+  - Blacksmith
   _resourceManager: {fileID: 1816345134}
   _buildingsParent: {fileID: 1693655260}
   blacksmith: {fileID: 1781418291082101834}
