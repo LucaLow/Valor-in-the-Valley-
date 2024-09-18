@@ -27,7 +27,7 @@ public class PlayerHealth : Health
            //     sw.Write("anon, " + wave);
            // }
 
-           // SceneManager.LoadScene("Main Menu");
+            SceneManager.LoadScene("Main Menu");
         }
     }
 }
