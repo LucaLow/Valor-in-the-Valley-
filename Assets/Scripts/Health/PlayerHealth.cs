@@ -21,7 +21,7 @@ public class PlayerHealth : Health
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            int wave = waves.waveNumber;
+            //int wave = waves.waveNumber;
            // using(StreamWriter sw = File.AppendText("C:\\leaderboard.text"))
            // {
            //     sw.Write("anon, " + wave);
