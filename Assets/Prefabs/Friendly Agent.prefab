@@ -577,8 +577,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentType: 0
   brainState: 0
-  hostileTags:
-  - Enemy
+  hostileTagDistancePairs:
+  - tag: Enemy
+    distance: 1
   wanderingState:
     speed: 3.5
     wanderRange: 10
@@ -588,7 +589,6 @@ MonoBehaviour:
     visionRange: 25
   meleeAttackingState:
     speed: 5
-    attackRange: 2
   rangeAttackingState:
     projectilePrefab: {fileID: 0}
     attackRate: 1
@@ -597,6 +597,7 @@ MonoBehaviour:
     attackRange: 20
     retreatDistance: 14
     retreatSpeed: 8
+  targets: []
   gizmoSettings:
     wanderingGizmos: 0
     pursuingGizmos: 0

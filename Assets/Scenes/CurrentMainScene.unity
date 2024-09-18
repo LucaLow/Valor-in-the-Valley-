@@ -123,7 +123,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: f107a1fee7d074c4687a106e01e1d786, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: eddb265f05ce629479c59d8b9948fe27, type: 2}
 --- !u!1 &16602409
 GameObject:
   m_ObjectHideFlags: 0
@@ -12633,6 +12633,10 @@ MonoBehaviour:
   _resourceManager: {fileID: 1816345134}
   UpgradePanelUI: {fileID: 1206690807}
   InfoDisplay: {fileID: 193089600}
+  buildingTags:
+  - Building
+  - Town Hall
+  - Blacksmith
   _woodCostDisplay: {fileID: 295287751}
   _stoneCostDisplay: {fileID: 142670535}
   _foodCostDisplay: {fileID: 1369815128}
