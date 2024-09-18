@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1406.9177, g: 3436.6914, b: 5491.451, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8959,12 +8959,12 @@ PrefabInstance:
     - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
         type: 3}
       propertyPath: hostileTagDistancePairs.Array.data[0].tag
-      value: Friendly
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
         type: 3}
       propertyPath: hostileTagDistancePairs.Array.data[1].tag
-      value: Player
+      value: Friendly
       objectReference: {fileID: 0}
     - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
         type: 3}

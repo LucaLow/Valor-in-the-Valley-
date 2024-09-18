@@ -193,11 +193,15 @@ public class AIAgent : MonoBehaviour
             tags[i] = hostileTagDistancePairs[i].tag;
         }
 
+        // Create a dictionary to maintain the order of target tags
+        var tagOrder = tags.Select((tag, index) => new { tag, index })
+                                 .ToDictionary(x => x.tag, x => x.index);
+
         // Filter and group by specified tags
         var groupedByTag = gameObjects
             .Where(go => tags.Contains(go.tag)) // Filter by target tags
             .GroupBy(go => go.tag)
-            .OrderBy(g => g.Key); // Sort groups by tag
+            .OrderBy(g => tagOrder[g.Key]); // Sort groups by the order in targetTags
 
         List<GameObject> sortedList = new List<GameObject>();
 
@@ -207,7 +211,6 @@ public class AIAgent : MonoBehaviour
             var sortedGroup = group.OrderBy(go => Vector3.Distance(go.transform.position, transform.position));
             sortedList.AddRange(sortedGroup);
         }
-
         // Now sortedList contains the sorted GameObjects based on the target tags
         // You can do whatever you need with the sorted list here
         return sortedList;
