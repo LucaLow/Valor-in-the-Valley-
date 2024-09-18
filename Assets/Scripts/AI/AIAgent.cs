@@ -24,7 +24,7 @@ public class AIAgent : MonoBehaviour
     [Space]
 
     [Tooltip("The tag(s) of gameobjects that which this agent will be hostile towards. Priority goes from top to bottom")]
-    public List<string> hostileTags;
+    public List<TagDistancePair> hostileTagDistancePairs;
 
 
     public WanderingStateSettings wanderingState;
@@ -76,8 +76,9 @@ public class AIAgent : MonoBehaviour
         // The targets are objects with a specified tag in the range
         for (int i = 0; i < objectsInRange.Length; i++)
         {
-            foreach (string tag in hostileTags)
+            foreach (TagDistancePair tagDistancePair in hostileTagDistancePairs)
             {
+                string tag = tagDistancePair.tag;
                 if (objectsInRange[i].CompareTag(tag))
                 {
                     targets.Add(objectsInRange[i].gameObject);
@@ -114,10 +115,13 @@ public class AIAgent : MonoBehaviour
 
                     meleeAttackingState.target = targets[0].transform;
 
-                    if (Vector3.Distance(transform.position, targets[0].transform.position) <= meleeAttackingState.attackRange)
+                    foreach (TagDistancePair tagDistancePair in hostileTagDistancePairs)
                     {
-                        // Attacking state
-                        brainState = BrainState.attacking;
+                        if (Vector3.Distance(transform.position, targets[0].transform.position) <= tagDistancePair.distance)
+                        {
+                            // Attacking state
+                            brainState = BrainState.attacking;
+                        }
                     }
 
                     break;
@@ -223,7 +227,16 @@ public class AIAgent : MonoBehaviour
             // Melee attacks
             case AgentType.Melee:
                 agent.speed = meleeAttackingState.speed;
-                agent.stoppingDistance = meleeAttackingState.attackRange;
+                if (meleeAttackingState.target != null)
+                {
+                    foreach (TagDistancePair tagDistancePair in hostileTagDistancePairs)
+                    {
+                        if (meleeAttackingState.target.CompareTag(tagDistancePair.tag))
+                        {
+                            agent.stoppingDistance = tagDistancePair.distance;
+                        }
+                    }
+                }
                 break;
             // Ranged attacks
             case AgentType.Ranged:
@@ -336,7 +349,6 @@ public class AIAgent : MonoBehaviour
         if (gizmoSettings.meleeGizmos && agentType == AgentType.Melee)
         {
             Gizmos.color = gizmoSettings.meleeGizmosColor;
-            Gizmos.DrawWireSphere(transform.position, meleeAttackingState.attackRange);
             DrawGizmoPath();
         }
         if (gizmoSettings.rangeGizmos && agentType == AgentType.Ranged)
@@ -388,9 +400,9 @@ public class AIAgent : MonoBehaviour
         // Add the agent component
         AIAgent AIAgent = agentObject.AddComponent<AIAgent>();
         // Set the hostile tags
-        AIAgent.hostileTags = new List<string>
+        AIAgent.hostileTagDistancePairs = new List<TagDistancePair>
         {
-            "Enemy"
+            new TagDistancePair("Enemy", 3)
         };
 
         // Add a health component
@@ -426,9 +438,9 @@ public class AIAgent : MonoBehaviour
         // Add the agent component
         AIAgent AIAgent = agentObject.AddComponent<AIAgent>();
         // Set the hostile tags
-        AIAgent.hostileTags = new List<string>
+        AIAgent.hostileTagDistancePairs = new List<TagDistancePair>
         {
-            "Friendly"
+            new TagDistancePair("Friendly", 3)
         };
 
         // Create temporary capsule graphics
@@ -446,6 +458,19 @@ public class AIAgent : MonoBehaviour
 
 
     #region Classes
+
+    [System.Serializable]
+    public class TagDistancePair
+    {
+        public string tag;
+        public float distance = 3;
+
+        public TagDistancePair(string tag, float distance)
+        {
+            this.tag = tag;
+            this.distance = distance;
+        }
+    }
 
     [System.Serializable]
     public class WanderingStateSettings
@@ -486,8 +511,6 @@ public class AIAgent : MonoBehaviour
     {
         [Tooltip("The movement speed of the agent in this state.")]
         public float speed = 5f;
-        [Tooltip("The maximum distance the agent must be within to attack the target.")]
-        public float attackRange = 2f;
 
 
         // The target that the agent will be chasing
