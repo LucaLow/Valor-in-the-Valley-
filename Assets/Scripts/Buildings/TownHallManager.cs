@@ -5,6 +5,8 @@ using TMPro;
 
 public class TownHallManager : MonoBehaviour
 {
+    // Singleton
+    public static TownHallManager Instance { get; private set; }
 
     public GameObject _buildManager;
     BuildManager buildManager;
@@ -30,6 +32,11 @@ public class TownHallManager : MonoBehaviour
     public GameObject _alertUI;
 
     bool displayNewLimit = false;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {

@@ -577,6 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentType: 0
   brainState: 0
+  townHallStoppingDistance: 5
   hostileTagDistancePairs:
   - tag: Enemy
     distance: 1
