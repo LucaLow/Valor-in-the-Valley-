@@ -263,7 +263,7 @@ MonoBehaviour:
   maxLevel: 3
   woodCostPerLevel: 000000000000000000000000
   stoneCostPerLevel: 000000000000000000000000
-  foodCostPerLevel: 050000000a0000000f000000
+  foodCostPerLevel: 190000004b00000096000000
   healthPerLevel: 320000006400000096000000
   troopParent: {fileID: 0}
 --- !u!1 &5201029587212728645

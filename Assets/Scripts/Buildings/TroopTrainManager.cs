@@ -36,7 +36,7 @@ public class TroopTrainManager : MonoBehaviour
 
     GameObject barracksInUse = null;
 
-    private int trainingCost = 5;
+    private int trainingCost = 15;
 
     private void Start()
     {

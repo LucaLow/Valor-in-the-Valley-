@@ -310,9 +310,9 @@ MonoBehaviour:
     type: 3}
   generationAmount: 10
   generatedResource: food
-  generationInterval: 15
+  generationInterval: 7.5
   level: 1
-  cost: 640000004b0000000a000000
+  cost: 280000000f0000000a000000
 --- !u!208 &-6950222440196319049
 NavMeshObstacle:
   m_ObjectHideFlags: 0

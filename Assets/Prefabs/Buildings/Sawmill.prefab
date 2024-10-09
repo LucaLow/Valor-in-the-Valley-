@@ -127,7 +127,7 @@ MonoBehaviour:
   generatedResource: wood
   generationInterval: 1
   level: 1
-  cost: 050000000200000000000000
+  cost: 080000000400000000000000
 --- !u!114 &4101889722828708059
 MonoBehaviour:
   m_ObjectHideFlags: 0

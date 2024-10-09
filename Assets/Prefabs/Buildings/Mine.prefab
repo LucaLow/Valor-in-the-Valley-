@@ -379,7 +379,7 @@ MonoBehaviour:
   generatedResource: stone
   generationInterval: 3
   level: 1
-  cost: 0f0000000500000000000000
+  cost: 0a0000000600000000000000
 --- !u!114 &8839129005354704769
 MonoBehaviour:
   m_ObjectHideFlags: 0
