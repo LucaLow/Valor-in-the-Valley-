@@ -23,6 +23,8 @@ public class AIAgent : MonoBehaviour
 
     [Space]
 
+    public float townHallStoppingDistance = 5;
+
     [Tooltip("The tag(s) of gameobjects that which this agent will be hostile towards. Priority goes from top to bottom")]
     public List<TagDistancePair> hostileTagDistancePairs;
 
@@ -87,6 +89,7 @@ public class AIAgent : MonoBehaviour
                 }
             }
         }
+
 
         // Stop any attacking coroutine(s)
         if (brainState != BrainState.attacking)
@@ -170,6 +173,7 @@ public class AIAgent : MonoBehaviour
             }
             return;
         }
+
 
         // Default to wandering state
         brainState = BrainState.wandering;
