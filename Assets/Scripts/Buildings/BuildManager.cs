@@ -385,26 +385,6 @@ public class BuildManager : MonoBehaviour
                 Mathf.Round(targetPosition.z / gridSize) * gridSize
                 );
 
-            // Clamp the x and z positions of the building
-
-            if (targetPosition.x > xGridMax)
-            {
-                targetPosition.x = xGridMax;
-            }
-            else if (targetPosition.x < xGridMin)
-            {
-                targetPosition.x = xGridMin;
-            }
-
-            if (targetPosition.z > zGridMax)
-            {
-                targetPosition.z = zGridMax;
-            }
-            else if (targetPosition.z < zGridMin)
-            {
-                targetPosition.z = zGridMin;
-            }
-
             // Lerp the transform of the preview to the target position
             if (shouldLerp)
             {
@@ -667,7 +647,7 @@ public class BuildManager : MonoBehaviour
             // Only place the building IF;
             // Left mouse button is down, no objects are within the preview's collider, and resources are sufficient
 
-            if (Input.GetMouseButtonDown(0) && !CheckForBuildingsInPreview() && CheckResourceSufficiency())
+            if (Input.GetMouseButtonDown(0) && !CheckForBuildingsInPreview() && CheckResourceSufficiency() && ValidateBuildingPosition())
             {
 
                 // Enable the resource generator
@@ -743,13 +723,40 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    private bool ValidateBuildingPosition()
+    {
+
+        // Get the position of the current preview
+        Vector3 targetPosition = _camera.position + _camera.forward * offset.z;
+
+        // Round the target position
+        targetPosition = new Vector3(
+            Mathf.Round(targetPosition.x / gridSize) * gridSize,
+            buildingYPos,
+            Mathf.Round(targetPosition.z / gridSize) * gridSize
+            );
+
+        // Check if the building is within the bounds of the player's plot
+        if (targetPosition.x > xGridMax 
+            | targetPosition.x < xGridMin
+            | targetPosition.z > zGridMax
+            | targetPosition.z < zGridMin
+            )
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
+    }
+
     // Updates the colour of the preview based on whether or not the prefab can be placed
     private void UpdatePreviewColor()
     {
 
         if (currentPreview != null)
         {
-            if (!CheckForBuildingsInPreview() && CheckResourceSufficiency())
+            if (!CheckForBuildingsInPreview() && CheckResourceSufficiency() && ValidateBuildingPosition())
             {
                 // If there are currently no objects inside of the preview AND resources are sufficient, set the colour to the default
                 UnityEngine.Color currentColour = new UnityEngine.Color(previewColor.r, previewColor.g, previewColor.b, previewOpacity);
@@ -774,7 +781,7 @@ public class BuildManager : MonoBehaviour
     float transparencyOscillationAmplitude = 0.2f;
     float transparencyOffset = 0.5f;
     */
-    float alertCooldown = 0.25f;
+        float alertCooldown = 0.25f;
     float timeSinceLastAlert = 100f;
 
 
