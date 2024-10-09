@@ -15,7 +15,6 @@ public class HealthDamager : MonoBehaviour
             healthComponent = healthComponent == null ? other.GetComponentInParent<Health>() : healthComponent;
             if (healthComponent != null)
             {
-                Debug.Log(healthComponent.gameObject.name);
                 healthComponent.TakeDamage(damage);
             }
         }

@@ -11,8 +11,12 @@ public class AgentHealth : Health
     private void Update()
     {
         float healthPercentage = HealthPercentage();
-        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, healthPercentage, 10 * Time.deltaTime);
-        healthBar.color = Color.Lerp(healthBar.color, healthBarColors.Evaluate(healthPercentage), 10 * Time.deltaTime);
+
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, healthPercentage, 10 * Time.deltaTime);
+            healthBar.color = Color.Lerp(healthBar.color, healthBarColors.Evaluate(healthPercentage), 10 * Time.deltaTime);
+        }
 
         if (IsDead())
             Destroy(gameObject);

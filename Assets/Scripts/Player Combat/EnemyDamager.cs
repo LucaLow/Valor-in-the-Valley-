@@ -13,6 +13,8 @@ public class EnemyDamager : MonoBehaviour
         {
             AgentHealth health = other.transform.GetComponentInParent<AgentHealth>();
 
+            Debug.Log(health.health);
+
             if (health != null)
             {
                 health.TakeDamage(damage);
