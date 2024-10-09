@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Blacksmith
   - Town Hall
+  - Obstacle
   layers:
   - Default
   - TransparentFX

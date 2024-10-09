@@ -366,8 +366,13 @@ public class BuildManager : MonoBehaviour
 
     float xGridMax = 170f;
     float xGridMin = 105f;
-    float zGridMax = 170f;
+    float zGridMax = 165f;
     float zGridMin = 105f;
+
+    float xInnerGridMax = 163f;
+    float xInnerGridMin = 112f;
+    float zInnerGridMax = 158f;
+    float zInnerGridMin = 112f;
 
     // Update prefab position function
     // Updates the prefab to be in front of the camera
@@ -736,6 +741,8 @@ public class BuildManager : MonoBehaviour
             Mathf.Round(targetPosition.z / gridSize) * gridSize
             );
 
+        bool isWall = false;
+
         // Check if the building is within the bounds of the player's plot
         if (targetPosition.x > xGridMax 
             | targetPosition.x < xGridMin
@@ -746,7 +753,22 @@ public class BuildManager : MonoBehaviour
             return false;
         } else
         {
-            return true;
+
+            bool insideInnerBounds =
+            !(targetPosition.x > xInnerGridMax
+            | targetPosition.x < xInnerGridMin
+            | targetPosition.z > zInnerGridMax
+            | targetPosition.z < zInnerGridMin
+            );
+
+            // In this context, != is used as an XOR operator
+            // If the building is in the inner bounds and is not a wall, the placement is valid
+            // If the building is a wall and is outside the bounds, then it is also valid
+            if (isWall != insideInnerBounds)
+                return true;
+            else
+                return false;
+
         }
     }
 
