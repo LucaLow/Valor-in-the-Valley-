@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5303646193424812939}
   m_Layer: 6
   m_Name: Barricade
-  m_TagString: Building
+  m_TagString: Barricade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   generatedResource: 
   generationInterval: 0
   level: 0
-  cost: 080000000400000000000000
+  cost: 1e0000000500000000000000
 --- !u!114 &4896372895250236737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,8 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1710998250f46dd4ca28b5a3a2ccb504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 100
+  maxHealth: 300
+  health: 300
   slider: {fileID: 0}
   gradient:
     serializedVersion: 2

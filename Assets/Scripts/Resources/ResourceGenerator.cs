@@ -118,7 +118,9 @@ public class ResourceGenerator : MonoBehaviour
     {
         _camera = Camera.main.transform;
 
-        generationProgressBar.SetActive(true);
+        if (generationProgressBar != null) {
+            generationProgressBar.SetActive(true);
+        }
 
         // Get the colour of the generated display
         genColor = _generatedDisplay.GetComponent<TextMeshProUGUI>().color;
@@ -127,35 +129,38 @@ public class ResourceGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeSinceGeneration += Time.deltaTime;
-
-        // Keep track of when to generate more resources
-        if (_resourceManager != null)
+        if (generatedResource != "")
         {
-            
-            if (timeSinceGeneration >= generationInterval)
+
+            timeSinceGeneration += Time.deltaTime;
+
+            // Keep track of when to generate more resources
+            if (_resourceManager != null)
             {
-                timeSinceGeneration -= generationInterval;
-                GenerateResources();
+
+                if (timeSinceGeneration >= generationInterval)
+                {
+                    timeSinceGeneration -= generationInterval;
+                    GenerateResources();
+                }
+
+            }
+
+            // Update the progress bar
+            if (generationProgressBar != null)
+            {
+                // Direction
+                generationProgressBar.transform.LookAt(_camera);
+                // Do this because the LookAt function makes the bar look away from the camera for some reason
+                // So we rotate it around 180 degrees
+                generationProgressBar.transform.eulerAngles = generationProgressBar.transform.eulerAngles + 180f * Vector3.forward;
+                generationProgressBar.transform.eulerAngles = generationProgressBar.transform.eulerAngles + 180f * Vector3.right;
+
+                // Fill
+                generationProgressFill.GetComponent<UnityEngine.UI.Image>().fillAmount = (timeSinceGeneration / generationInterval);
             }
 
         }
-
-        // Update the progress bar
-        if (generationProgressBar != null)
-        {
-            // Direction
-            generationProgressBar.transform.LookAt(_camera);
-            // Do this because the LookAt function makes the bar look away from the camera for some reason
-            // So we rotate it around 180 degrees
-            generationProgressBar.transform.eulerAngles = generationProgressBar.transform.eulerAngles + 180f * Vector3.forward;
-            generationProgressBar.transform.eulerAngles = generationProgressBar.transform.eulerAngles + 180f * Vector3.right;
-
-            // Fill
-            generationProgressFill.GetComponent<UnityEngine.UI.Image>().fillAmount = (timeSinceGeneration / generationInterval);
-        }
-
-        
     }
 
     private void FixedUpdate()
