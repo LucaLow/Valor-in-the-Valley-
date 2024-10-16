@@ -31,7 +31,6 @@ public class BarracksManager : MonoBehaviour
     public GameObject progressBar;
     public GameObject generationProgressFill;
     public GameObject queueDisplay;
-    public GameObject instructionsText;
 
     float timeTraining = 0f;
     float trainTime = 5f;
@@ -80,7 +79,6 @@ public class BarracksManager : MonoBehaviour
             // So we rotate it around 180 degrees
             progressBar.transform.eulerAngles = progressBar.transform.eulerAngles + 180f * Vector3.forward;
             progressBar.transform.eulerAngles = progressBar.transform.eulerAngles + 180f * Vector3.right;
-            instructionsText.transform.eulerAngles = instructionsText.transform.eulerAngles + 180f * Vector3.right;
         } else
         {
             timeTraining = 0f;
