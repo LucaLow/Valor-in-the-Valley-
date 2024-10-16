@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
 public class WaveSystem : MonoBehaviour
 {
     public GameObject EnemyWave;
     public Transform[] spawnLocations;
     public TextMeshProUGUI waveNumberDisplay;
+    public TextMeshProUGUI timeLeftDisplay;
     public int waveNumber = 0;
+
     private void Start()
     {
         waveNumberDisplay.text = "Wave Number: "+waveNumber.ToString();
@@ -16,7 +19,7 @@ public class WaveSystem : MonoBehaviour
     }
 
     float initialWaveTime = 60f;
-    float shortestWaveTime = 10f;
+    float shortestWaveTime = 20f;
 
     // The amount of time (in seconds) to shorten the wave cooldown by
     float intermissionShortenCoefficient = 5f;
@@ -24,15 +27,23 @@ public class WaveSystem : MonoBehaviour
     IEnumerator wave()
     {
         float time = 0;
+        float intermissionTime = Math.Max(initialWaveTime - (waveNumber * intermissionShortenCoefficient), shortestWaveTime);
 
         // The amount of time to wait between waves should gradually decrease every wave until it hits a minimum value
         // The reduction in cooldown between waves is determined by: (the current wave) multiplied by (some coefficient)
 
-        while (time <= initialWaveTime - (waveNumber * intermissionShortenCoefficient) | time <= shortestWaveTime)
+        while (time <= intermissionTime)
         {
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
+
+            if (timeLeftDisplay != null)
+            {
+                timeLeftDisplay.text = "Time Left: " + Math.Floor(intermissionTime - time).ToString();
+            }
         }
+
+        // Spawn the wave
 
         for (int x = 0; x <= waveNumber; x++)
         {
