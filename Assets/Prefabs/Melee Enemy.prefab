@@ -370,13 +370,13 @@ MonoBehaviour:
   hostileTagDistancePairs:
   - tag: Friendly
     distance: 1
-  - tag: Barricade
-    distance: 3
   - tag: Player
     distance: 1.75
   - tag: Town Hall
     distance: 5
   - tag: Building
+    distance: 3
+  - tag: Barricade
     distance: 3
   wanderingState:
     speed: 3.5
