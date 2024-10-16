@@ -38,6 +38,10 @@ public class PauseManager : MonoBehaviour
                 Time.timeScale = 0;
                 pauseUI.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
+
+                volumeSlider.value = StaticVariables.Volume;
+                sensitivitySlider.value = StaticVariables.MouseSensitivity;
+                FOVSlider.value = StaticVariables.CameraFOV;
             }
             else
             {
