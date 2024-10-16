@@ -47,6 +47,7 @@ public class FriendlyAIDirector : MonoBehaviour
     private void Start()
     {
         playerCamera = Camera.main;
+        isDirecting = false;
     }
 
     private void Update()
