@@ -1,45 +1,66 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class WaveSystem : MonoBehaviour
+public class WaveSystem : DataManager
 {
-    public GameObject EnemyWave;
-    public Transform[] spawnLocations;
-    public TextMeshProUGUI waveNumberDisplay;
-    public int waveNumber = 0;
-    private void Start()
+    public enum EWaveDifficulty : int
     {
-        waveNumberDisplay.text = "Wave Number: "+waveNumber.ToString();
-        StartCoroutine(wave());
+        EXPERT = 1,
+        HARD = 2,
+        NORMAL = 3,
+        EASY = 4,
     }
-
-    float initialWaveTime = 60f;
-    float shortestWaveTime = 10f;
-
-    // The amount of time (in seconds) to shorten the wave cooldown by
-    float intermissionShortenCoefficient = 5f;
-
-    IEnumerator wave()
+    public GameObject gEnemyPrefab;
+    [SerializeField] public Transform[] tSpawns = new Transform[4];
+    public TextMeshProUGUI tmpWaveIndicator;
+    public int iCurrentWave = 0;
+    private void Start( )
     {
-        float time = 0;
+        iCurrentWave = 1;
+        tmpWaveIndicator.text = "Enemy Wave: " + ( iCurrentWave - 1 ).ToString( );
+        StartCoroutine( EnemyWaveRoutine( ) );
+    }
+    IEnumerator EnemyWaveRoutine( )
+    {
+        float fTime = 0.0f, fMinutesToWait = 0.0f;
+        float fMinTime = 1.0f * ( float )gData.eWaveDifficulty;
+        float fMaxTime = 2.0f * ( float )gData.eWaveDifficulty;
 
-        // The amount of time to wait between waves should gradually decrease every wave until it hits a minimum value
-        // The reduction in cooldown between waves is determined by: (the current wave) multiplied by (some coefficient)
+        if ( fMinTime != 0.0f && fMaxTime != 0.0f )
+            fMinutesToWait = UnityEngine.Random.Range( fMinTime, fMaxTime );
+        else
+            yield return null;
 
-        while (time <= initialWaveTime - (waveNumber * intermissionShortenCoefficient) | time <= shortestWaveTime)
+        while ( fTime <= ( 5.0f ) )
         {
-            time += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            fTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame( );
         }
 
-        for (int x = 0; x <= waveNumber; x++)
+        int iNumberOfEnemies = UnityEngine.Random.Range(
+            1 * iCurrentWave,                     // Min
+            3 * iCurrentWave                      // Max
+        );
+
+        for ( int i = 0; i < iNumberOfEnemies; i++ )
         {
-            Instantiate(EnemyWave).transform.position = spawnLocations[UnityEngine.Random.Range(0, 4)].position;
+            Transform tParent = tSpawns[UnityEngine.Random.Range( 0, 4 )];
+
+            GameObject gObject = Instantiate(
+                gEnemyPrefab,       // Object
+                tParent             // Parent
+            );
+
+            gObject.transform.position = tParent.position;
+
+            AIAgent aiAgent = gObject.GetComponent<AIAgent>( );
+            if ( aiAgent )
+                aiAgent.wanderingState.wanderRangePosition = TownHallManager.Instance.transform.position;
         }
-        waveNumber++;
-        waveNumberDisplay.text = "Wave Number: " + waveNumber.ToString();
-        StartCoroutine(wave());
+
+        iCurrentWave++;
+        tmpWaveIndicator.text = "Enemy Wave: " + ( iCurrentWave - 1 ).ToString( );
+        StartCoroutine( EnemyWaveRoutine( ) );
     }
 }
+    
