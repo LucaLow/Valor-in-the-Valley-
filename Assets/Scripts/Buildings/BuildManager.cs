@@ -101,6 +101,7 @@ public class BuildManager : MonoBehaviour
         buildingKeycodes.Add("Mine", KeyCode.Alpha2);
         buildingKeycodes.Add("Farm", KeyCode.Alpha3);
         buildingKeycodes.Add("Barracks", KeyCode.Alpha4);
+        buildingKeycodes.Add("Barricade", KeyCode.Alpha5);
 
         // Reference to which building prefab relates to what index in the public prefab array
         // e.g. if the sawmill is the first item in the prefab array,
@@ -110,10 +111,15 @@ public class BuildManager : MonoBehaviour
         buildingPrefabDict.Add("Mine", buildingPrefabs[1]);
         buildingPrefabDict.Add("Farm", buildingPrefabs[2]);
         buildingPrefabDict.Add("Barracks", buildingPrefabs[3]);
+        buildingPrefabDict.Add("Barricade", buildingPrefabs[4]);
 
         blacksmithManager = blacksmith.GetComponent<BlacksmithManager>();
 
     }
+
+    // The tag of the building currently shown as a preview
+    // The tag is overwritten to "Building Preview" when placement begins so we need to keep track of what it was originally
+    string previewBuildingTag = "";
 
     // Update cost display
     private void UpdateCostDisplay()
@@ -333,6 +339,7 @@ public class BuildManager : MonoBehaviour
                         currentPreview.name = buildingPrefabDict[building].name;
 
                         // Update preview tag
+                        previewBuildingTag = currentPreview.tag;
                         currentPreview.tag = "BuildingPreview";
 
                         // Disaable the resource generator
@@ -341,7 +348,10 @@ public class BuildManager : MonoBehaviour
                             resourceGenerator.enabled = false;
 
                             // Hide the progress bar
-                            resourceGenerator.generationProgressBar.SetActive(false);
+                            if (resourceGenerator.generationProgressBar != null)
+                            {
+                                resourceGenerator.generationProgressBar.SetActive(false);
+                            }
                         }
                     }
                 } else // If there are an insufficient number of slots, alert the player
@@ -364,10 +374,10 @@ public class BuildManager : MonoBehaviour
 
     float gridSize = 5f;
 
-    float xGridMax = 170f;
-    float xGridMin = 105f;
-    float zGridMax = 165f;
-    float zGridMin = 105f;
+    float xGridMax = 175f;
+    float xGridMin = 100f;
+    float zGridMax = 170f;
+    float zGridMin = 100f;
 
     float xInnerGridMax = 163f;
     float xInnerGridMin = 112f;
@@ -687,7 +697,7 @@ public class BuildManager : MonoBehaviour
                 }
 
                 // Update the building's tag
-                currentPreview.tag = "Building";
+                currentPreview.tag = previewBuildingTag;
 
                 // Enable the building's collisions
                 UpdatePreviewCollision(true);
@@ -741,7 +751,7 @@ public class BuildManager : MonoBehaviour
             Mathf.Round(targetPosition.z / gridSize) * gridSize
             );
 
-        bool isWall = false;
+        bool isWall = (previewBuildingTag == "Barricade");
 
         // Check if the building is within the bounds of the player's plot
         if (targetPosition.x > xGridMax 

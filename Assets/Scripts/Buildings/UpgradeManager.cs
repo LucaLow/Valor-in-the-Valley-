@@ -28,7 +28,7 @@ public class UpgradeManager : MonoBehaviour
 
     [Space]
 
-    public string[] buildingTags = { "Building", "Town Hall", "Blacksmith" };
+    public string[] buildingTags = { "Building", "Town Hall", "Blacksmith", "Barricade" };
 
     [Space]
 
@@ -232,6 +232,29 @@ public class UpgradeManager : MonoBehaviour
             slotsAlert.GetComponent<TextMeshProUGUI>().text = "+"+ newHealth +" Troop Health ("+ blacksmithManager.healthPerLevel[blacksmithManager.level] +")";
             slotsAlert.GetComponent<TextMeshProUGUI>().color = new Color(0f, 1f, 0f, 1f);
         }
+
+        // Upgrade the max health of the building if it is a barricade
+        // Also set the health to max (i.e. fully repair it)
+
+        BuildingHealth _BuildingHealthManager = building.GetComponent<BuildingHealth>();
+
+        if (_BuildingHealthManager != null)
+        {
+
+            if (building.tag == "Barricade")
+            {
+
+                if (_BuildingHealthManager != null)
+                {
+
+                    _BuildingHealthManager.maxHealth += 200;
+
+                }
+            }
+
+        }
+
+        _BuildingHealthManager.health = _BuildingHealthManager.maxHealth;
 
         // Subtract the cost from the player's resources
 
