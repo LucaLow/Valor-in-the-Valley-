@@ -70,8 +70,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Insufficient Slots!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7d1429a57ec79ce4cac03fceafe49cee, type: 2}
+  m_sharedMaterial: {fileID: -6417088436454137413, guid: 7d1429a57ec79ce4cac03fceafe49cee,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
