@@ -15,11 +15,20 @@ public class WaveSystem : MonoBehaviour
         StartCoroutine(wave());
     }
 
+    float initialWaveTime = 60f;
+    float shortestWaveTime = 10f;
+
+    // The amount of time (in seconds) to shorten the wave cooldown by
+    float intermissionShortenCoefficient = 5f;
+
     IEnumerator wave()
     {
         float time = 0;
 
-        while (time <= 60)
+        // The amount of time to wait between waves should gradually decrease every wave until it hits a minimum value
+        // The reduction in cooldown between waves is determined by: (the current wave) multiplied by (some coefficient)
+
+        while (time <= initialWaveTime - (waveNumber * intermissionShortenCoefficient) | time <= shortestWaveTime)
         {
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
