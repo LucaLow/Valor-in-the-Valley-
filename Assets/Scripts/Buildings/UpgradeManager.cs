@@ -252,9 +252,9 @@ public class UpgradeManager : MonoBehaviour
                 }
             }
 
-        }
+            _BuildingHealthManager.health = _BuildingHealthManager.maxHealth;
 
-        _BuildingHealthManager.health = _BuildingHealthManager.maxHealth;
+        }
 
         // Subtract the cost from the player's resources
 
