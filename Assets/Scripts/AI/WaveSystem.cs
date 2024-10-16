@@ -25,7 +25,10 @@ public class WaveSystem : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        for(int x = 0; x <= waveNumber; x++) Instantiate(EnemyWave).transform.position = spawnLocations[UnityEngine.Random.Range(0, 4)].position;
+        for (int x = 0; x <= waveNumber; x++)
+        {
+            Instantiate(EnemyWave).transform.position = spawnLocations[UnityEngine.Random.Range(0, 4)].position;
+        }
         waveNumber++;
         waveNumberDisplay.text = "Wave Number: " + waveNumber.ToString();
         StartCoroutine(wave());

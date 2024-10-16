@@ -46,6 +46,8 @@ public class PauseManager : MonoBehaviour
             }
             else
             {
+                CloseSettings();
+
                 Time.timeScale = 1;
                 pauseUI.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
