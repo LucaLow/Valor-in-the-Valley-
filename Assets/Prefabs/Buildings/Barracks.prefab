@@ -247,7 +247,7 @@ MonoBehaviour:
   progressBar: {fileID: 4678408737667419631}
   generationProgressFill: {fileID: 4837808646082812245}
   queueDisplay: {fileID: 6304312403581480949}
-  instructionsText: {fileID: 5106985098060405556}
+  directingInstructions: {fileID: 5106985098060405556}
 --- !u!1 &4678408737667419631
 GameObject:
   m_ObjectHideFlags: 0

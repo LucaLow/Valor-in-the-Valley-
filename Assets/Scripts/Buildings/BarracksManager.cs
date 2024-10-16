@@ -31,6 +31,7 @@ public class BarracksManager : MonoBehaviour
     public GameObject progressBar;
     public GameObject generationProgressFill;
     public GameObject queueDisplay;
+    public GameObject directingInstructions;
 
     float timeTraining = 0f;
     float trainTime = 5f;
@@ -54,6 +55,9 @@ public class BarracksManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        directingInstructions.transform.LookAt(_camera);
+        directingInstructions.transform.eulerAngles = directingInstructions.transform.eulerAngles + 180f * Vector3.forward;
+        directingInstructions.transform.eulerAngles = directingInstructions.transform.eulerAngles + 180f * Vector3.right;
 
         CheckForDeadTroops();
 
@@ -79,6 +83,8 @@ public class BarracksManager : MonoBehaviour
             // So we rotate it around 180 degrees
             progressBar.transform.eulerAngles = progressBar.transform.eulerAngles + 180f * Vector3.forward;
             progressBar.transform.eulerAngles = progressBar.transform.eulerAngles + 180f * Vector3.right;
+
+            
         } else
         {
             timeTraining = 0f;
