@@ -30,6 +30,10 @@ public class MainMenuCode : MonoBehaviour
     {
         settingsPage.SetActive(true);
         mainPage.SetActive(false);
+
+        VolumeSlider.value = StaticVariables.Volume;
+        SensitvitiySlider.value = StaticVariables.MouseSensitivity;
+        FOVSlider.value = StaticVariables.CameraFOV;
     }
 
     public void settingsPageCloseBtn()
