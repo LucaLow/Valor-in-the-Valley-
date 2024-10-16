@@ -30765,28 +30765,8 @@ PrefabInstance:
       propertyPath: troopParent
       value: 
       objectReference: {fileID: 1280800391}
-    - target: {fileID: 3601047226069330833, guid: b5835993a3aee054ab6e9ae97f3fce91,
-        type: 3}
-      propertyPath: healthPerLevel.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3601047226069330833, guid: b5835993a3aee054ab6e9ae97f3fce91,
-        type: 3}
-      propertyPath: healthPerLevel.Array.data[1]
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3601047226069330833, guid: b5835993a3aee054ab6e9ae97f3fce91,
-        type: 3}
-      propertyPath: healthPerLevel.Array.data[2]
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3601047226069330833, guid: b5835993a3aee054ab6e9ae97f3fce91,
-        type: 3}
-      propertyPath: healthPerLevel.Array.data[3]
-      value: 150
-      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 5551479864910749064, guid: b5835993a3aee054ab6e9ae97f3fce91, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: b5835993a3aee054ab6e9ae97f3fce91, type: 3}
 --- !u!4 &1781418291082101830 stripped
 Transform:
