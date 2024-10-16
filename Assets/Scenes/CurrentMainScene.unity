@@ -30608,6 +30608,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 6573094983871116356, guid: e354cbdbcf3a407469120db9133e6269,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6573094983871116358, guid: e354cbdbcf3a407469120db9133e6269,
         type: 3}
       propertyPath: m_RootOrder
@@ -30810,6 +30815,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6973370622848341916, guid: 571faf98ec8477443a221a76324601a1,
         type: 3}
+      propertyPath: radius
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973370622848341916, guid: 571faf98ec8477443a221a76324601a1,
+        type: 3}
       propertyPath: objectsToToggleWhileDirecting.Array.data[0]
       value: 
       objectReference: {fileID: 652829520}
@@ -30832,6 +30842,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Agent Director
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973370623276226660, guid: 571faf98ec8477443a221a76324601a1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6973370623689322851, guid: 571faf98ec8477443a221a76324601a1,
         type: 3}
