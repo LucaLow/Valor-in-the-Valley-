@@ -25,6 +25,7 @@ public class PauseManager : MonoBehaviour
     private void Start()
     {
         IsPaused = false;
+        Time.timeScale = 1;
     }
 
     private void Update()
