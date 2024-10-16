@@ -22,6 +22,11 @@ public class PauseManager : MonoBehaviour
     public Slider sensitivitySlider;
     public Slider FOVSlider;
 
+    private void Start()
+    {
+        IsPaused = false;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
