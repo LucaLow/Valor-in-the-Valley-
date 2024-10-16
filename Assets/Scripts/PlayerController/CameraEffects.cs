@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -44,14 +45,17 @@ public class CameraEffects : MonoBehaviour
 
         tilt = 0;
 
-        if (headBobSettings.enabled)
-            PerformHeadBob();
-        if (lookTiltSettings.enabled)
-            PerformLookTilt();
-        if (horizontalTiltDueToVelocitySettings.enabled)
-            PerformHorizontalTilt();
-        if (verticalTiltDueToVelocitySettings.enabled)
-            PerformVerticalTilt();
+        if (PauseManager.IsPaused == false)
+        {
+            if (headBobSettings.enabled)
+                PerformHeadBob();
+            if (lookTiltSettings.enabled)
+                PerformLookTilt();
+            if (horizontalTiltDueToVelocitySettings.enabled)
+                PerformHorizontalTilt();
+            if (verticalTiltDueToVelocitySettings.enabled)
+                PerformVerticalTilt();
+        }
         if (movementFOVAdjustmentsSettings.enabled && FOVBlocked == false)
             PerformFOVAdjustments();
 
@@ -93,18 +97,18 @@ public class CameraEffects : MonoBehaviour
             Vector2 offset = new Vector2(posX, posY) * intensity;
 
             // Apply the rotation
-            transform.localPosition = Vector2.Lerp(transform.localPosition, (Vector2)defaultPosition + offset, 10 * Time.deltaTime);
+            transform.localPosition = Vector2.Lerp(transform.localPosition, (Vector2)defaultPosition + offset, 10 * Time.unscaledDeltaTime);
 
             yield return new WaitForEndOfFrame();
 
             // Limit the time to shake camera
-            timer -= Time.deltaTime;
+            timer -= Time.unscaledDeltaTime;
             if (timer <= 0)
             {
                 // Reset the camera position to the default
                 while (Mathf.Abs(defaultPosition.x - transform.localPosition.x) > 0.001f)
                 {
-                    transform.localPosition = Vector3.Lerp(transform.localPosition, defaultPosition, 10 * Time.deltaTime);
+                    transform.localPosition = Vector3.Lerp(transform.localPosition, defaultPosition, 10 * Time.unscaledDeltaTime);
                     yield return new WaitForEndOfFrame();
                 }
                 transform.localPosition = defaultPosition;
@@ -125,8 +129,8 @@ public class CameraEffects : MonoBehaviour
 
         // Create a vector from the head bob values
         Vector3 position = transform.localPosition;
-        position.x = Mathf.Lerp(position.x, defaultPosition.x + horizontalHeadBob, headBobSettings.interpolationSpeed * Time.deltaTime);
-        position.y = Mathf.Lerp(position.y, defaultPosition.y + verticalHeadBob, headBobSettings.interpolationSpeed * Time.deltaTime);
+        position.x = Mathf.Lerp(position.x, defaultPosition.x + horizontalHeadBob, headBobSettings.interpolationSpeed * Time.unscaledDeltaTime);
+        position.y = Mathf.Lerp(position.y, defaultPosition.y + verticalHeadBob, headBobSettings.interpolationSpeed * Time.unscaledDeltaTime);
 
         // Apply the head bob
         transform.localPosition = position;
@@ -135,11 +139,11 @@ public class CameraEffects : MonoBehaviour
     private void PerformLookTilt()
     {
         // Get the horizontal mouse input
-        double horizontal = (double) -cameraController.GetHorizontalMouseInput() / Time.deltaTime;
+        double horizontal = (double) -cameraController.GetHorizontalMouseInput() / Time.unscaledDeltaTime;
         // Multiply the mouse input by the rotation intensity
         double rotation = horizontal * lookTiltSettings.rotationIntensity * 0.01f;
 
-        lookTilt = Mathf.Lerp(lookTilt, (float) rotation, lookTiltSettings.rotationInterpolationSpeed * Time.deltaTime);
+        lookTilt = Mathf.Lerp(lookTilt, (float) rotation, lookTiltSettings.rotationInterpolationSpeed * Time.unscaledDeltaTime);
     }
 
     private void PerformHorizontalTilt()
@@ -147,7 +151,7 @@ public class CameraEffects : MonoBehaviour
         float horizontalMovement = -PlayerMovement.GetMovementInput().x;
         float targetTilt = horizontalMovement * horizontalTiltDueToVelocitySettings.rotationIntensity;
 
-        moveTilt = Mathf.LerpAngle(moveTilt, targetTilt, horizontalTiltDueToVelocitySettings.rotationInterpolationSpeed * Time.deltaTime);
+        moveTilt = Mathf.LerpAngle(moveTilt, targetTilt, horizontalTiltDueToVelocitySettings.rotationInterpolationSpeed * Time.unscaledDeltaTime);
     }
 
     private void PerformVerticalTilt()
@@ -162,7 +166,11 @@ public class CameraEffects : MonoBehaviour
         // Get a reference to the current transforms angle
         Vector3 eulerAngles = transform.localEulerAngles;
         // Interpolate the angle along the x axis to the new rotation
-        eulerAngles.x = Mathf.LerpAngle(eulerAngles.x, rotation, verticalTiltDueToVelocitySettings.rotationInterpolationSpeed * Time.deltaTime);
+        eulerAngles.x = Mathf.LerpAngle(eulerAngles.x, rotation, verticalTiltDueToVelocitySettings.rotationInterpolationSpeed * Time.unscaledDeltaTime);
+
+        if (eulerAngles.magnitude.ToString() == "NaN")
+            return;
+
         // Apply the rotation
         transform.localEulerAngles = eulerAngles;
     }
@@ -175,24 +183,26 @@ public class CameraEffects : MonoBehaviour
         if (playerMovement.speed == playerMovement.movement.sprintSpeed)
         {
             // Sprinting
-            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.sprintingFOV, movementFOVAdjustmentsSettings.sprintFOVChangeTime * Time.deltaTime);
+            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.sprintingFOV, movementFOVAdjustmentsSettings.sprintFOVChangeTime * Time.unscaledDeltaTime);
         }
         else
         {
-            if (PlayerMovement.GetMovementInput().y > 0)
+            if (PlayerMovement.GetMovementInput().y > 0 && PauseManager.IsPaused == false)
                 // Moving forwards
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.movingForwardFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.deltaTime);
+                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.movingForwardFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.unscaledDeltaTime);
             else if (PlayerMovement.GetMovementInput().y < 0)
                 // Moving backwards
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.movingBackwardFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.deltaTime);
+                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.movingBackwardFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.unscaledDeltaTime);
             else
                 // Not moving
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.idleFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.deltaTime);
+                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, movementFOVAdjustmentsSettings.idleFOV, movementFOVAdjustmentsSettings.regularFOVChangeTime * Time.unscaledDeltaTime);
         }
     }
 
     private void ApplyTilt()
     {
+        if (PauseManager.IsPaused) return;
+
         tilt = lookTilt + moveTilt;
 
         // Get a reference to the current transforms angle

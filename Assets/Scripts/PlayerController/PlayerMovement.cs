@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
         speed = movement.walkSpeed;
 
+        if (PauseManager.IsPaused) return;
         if (movement.canSprint && Input.GetKey(movement.sprintKey))
         {
             if (!(isCrouching && IsRoofed()))

@@ -23,6 +23,8 @@ public class PlayerWeapon : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (PauseManager.IsPaused) return;
+
             clickLoop = StartCoroutine(LoopClicks());
         }
         if (Input.GetMouseButtonUp(0))
