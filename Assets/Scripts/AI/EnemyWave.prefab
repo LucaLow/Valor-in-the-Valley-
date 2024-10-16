@@ -101,6 +101,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: Melee Enemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[0].tag
+      value: Town Hall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[1].tag
+      value: Barricade
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[2].tag
+      value: Friendly
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[3].tag
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[4].tag
+      value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[0].distance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[1].distance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[2].distance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[3].distance
+      value: 1.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed38466ba70eb094ca7e62a800fe813b, type: 3}
 --- !u!4 &7037073633742077732 stripped
@@ -207,6 +252,56 @@ PrefabInstance:
       propertyPath: m_Name
       value: Melee Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[0].tag
+      value: Barricade
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[1].tag
+      value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[2].tag
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[3].tag
+      value: Friendly
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[4].tag
+      value: Town Hall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[0].distance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[1].distance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[2].distance
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[3].distance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[4].distance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed38466ba70eb094ca7e62a800fe813b, type: 3}
 --- !u!1 &7037073635097565937 stripped
@@ -312,6 +407,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Melee Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[0].tag
+      value: Barricade
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[1].tag
+      value: Friendly
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[2].tag
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[3].tag
+      value: Town Hall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[4].tag
+      value: Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[0].distance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[1].distance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[2].distance
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602540542840833695, guid: ed38466ba70eb094ca7e62a800fe813b,
+        type: 3}
+      propertyPath: hostileTagDistancePairs.Array.data[3].distance
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed38466ba70eb094ca7e62a800fe813b, type: 3}
