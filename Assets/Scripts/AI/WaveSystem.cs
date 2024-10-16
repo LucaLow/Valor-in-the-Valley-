@@ -31,7 +31,7 @@ public class WaveSystem : DataManager
         else
             yield return null;
 
-        while ( fTime <= ( fMinutesToWait * 60.0f ) )
+        while ( fTime <= ( 5.0f ) )
         {
             fTime += Time.deltaTime;
             yield return new WaitForEndOfFrame( );
